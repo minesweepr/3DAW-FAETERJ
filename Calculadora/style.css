@@ -1,0 +1,72 @@
+*{
+    color:#F2F2F2;
+    border: 0;
+}
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+section{
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+}
+.calculadora{
+    background-color: #1A1A1A;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+}
+input[type="text"]{
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+}
+input.resposta{
+    width: 85%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #6f6f6f;
+    border-radius: 3px;
+}
+input.resposta:focus{
+    outline: none;
+    box-shadow: none;
+}
+button, input.btn, input.resposta{
+    background-color: #636363;
+    border-radius: 8px;
+}
+button, input.btn{
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+}
+input.equal-button{
+    background-color: #bd0003; 
+    width: 96%;
+    font-size: 18px;
+    margin-top: 10px;
+}
+input.orange{
+    background-color: #F89320;
+}
+input.red{
+    background-color: #FF4544;
+}
+h1{
+    color: #565656; 
+}
