@@ -6,6 +6,7 @@
 
         <link rel="stylesheet" href="style.css">
         <?php
+        $resposta="";
         if(isset($_POST['resposta'])){
             $resposta=$_POST['resposta'];
         }
