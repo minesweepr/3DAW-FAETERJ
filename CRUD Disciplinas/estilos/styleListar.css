@@ -1,0 +1,49 @@
+:root{
+    --white: #FEFEFC;
+}
+/*TABELA*/
+main.corpo table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+main.corpo th, main.corpo td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #d7d5e0;
+  table-layout: fixed;
+  width: 25%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+main.corpo tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+main.corpo th {
+  background-color: #e4e9f2;
+  font-weight: bold;
+}
+
+main.corpo a {
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+main.corpo a:hover {
+  opacity: 0.8;
+}
+/*BOTOES*/
+a.editar {
+  background-color: #7187AA;
+  color: var(--white);
+}
+
+a.deletar {
+  background-color: #DB6F71;
+  color: var(--white);
+}

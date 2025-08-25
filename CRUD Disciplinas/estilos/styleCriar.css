@@ -1,0 +1,56 @@
+:root{
+    --bg: #EDEEF2;
+    --white: #FEFEFC;
+    --blue: #2A3344;
+    --black: #68666c;
+}
+
+/* FORMULÁRIO */
+main.corpo form {
+    background-color: var(--white);
+    padding: 20px;
+    border: 1px solid #d7d5e0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+main.corpo form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    color: var(--black);
+}
+
+main.corpo form input {
+    padding: 10px;
+    width: 50%;
+    border: 1px solid #d7d5e0;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+main.corpo form button {
+    padding: 12px 25px;
+    margin-top: 20px;
+    background-color: #7187AA;
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+main.corpo form button:hover {
+    opacity: 0.8;
+}
+
+main.corpo p {
+    margin-top: 10px;
+    font-weight: bold;
+    color: var(--black);
+}

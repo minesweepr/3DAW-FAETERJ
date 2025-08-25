@@ -1,0 +1,6 @@
+Programação Orientada a Objetos Básica;3POB;80
+Projeto de Banco de Dados;3PDB;80
+Desenvolvimento de Tecnologias WEB;3DAW;80
+Álgebra Linear;3ALG;80
+Estrutura de Dados;3ESD;80
+Fundamentos de Redes e Sistemas Distribuídos;3RSD;80
