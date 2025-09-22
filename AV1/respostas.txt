@@ -1,0 +1,5 @@
+gabriel@hotmail.com;o que você espera da empresa?;muito
+gabriel@hotmail.com;qual sua média salarial?;R$5000000000000,99
+gabriel@hotmail.com;escolha entre as seguintes opções;a
+gabriel@hotmail.com;resultado de 1+3;4
+gabriel@hotmail.com;qual o melhor número?;3

@@ -1,3 +1,2 @@
-155;s;sla5
-11;aq;5
-1;1;1
+155;o que você espera da empresa?;
+11;qual sua média salarial?;

@@ -1,6 +1,6 @@
 <?php
-if (file_exists("../usuarios.txt")) {
-    $arq=fopen("../usuarios.txt", "r") or die("erro ao abrir o arq1");
+if (file_exists("../../usuarios.txt")) {
+    $arq=fopen("../../usuarios.txt", "r") or die("erro ao abrir o arq1");
     while (($linha=fgets($arq))!==false) {
         $linhas[]=explode(";", trim($linha));
     }
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     $senha=$_POST['senha'];
 
     $linhas[$id]=[$nome, $email, $senha];
-    $arq=fopen("../usuarios.txt", "w") or die("erro ao escrever o arq2");
+    $arq=fopen("../../usuarios.txt", "w") or die("erro ao escrever o arq2");
     foreach ($linhas as $coluna){
         $linha=implode(";", $coluna)."\n";
         fwrite($arq, $linha);
@@ -32,13 +32,13 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Alterar usuario</title>
+        <title>sistema corporativo</title>
     </head>
     <body>
         <h1>alterar usuario</h1>
         
         <nav><a href="../listarPerguntas.php">listar perguntas</a> | 
-        <a href="../texto/listarUmaTexto.php">exibir uma pergunta de texto</a> | 
+        <a href="../texto/listarUmTexto.php">exibir uma pergunta de texto</a> | 
         <a href="../texto/criarTexto.php">criar pergunta de texto</a> | 
         <a href="../multipla/listarUmaMultipla.php">exibir uma pergunta de multipla escolha</a> | 
         <a href="../multipla/criarMultipla.php">criar pergunta de multipla escolha</a></nav>

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>listar usuarios</title> 
+  <title>sistema corporativo</title> 
 </head>
 
 <body>
@@ -10,7 +10,7 @@
         <h1>Listar todas os usuarios</h1>
 
         <nav><a href="../listarPerguntas.php">listar perguntas</a> | 
-        <a href="../texto/listarUmaTexto.php">exibir uma pergunta de texto</a> | 
+        <a href="../texto/listarUmTexto.php">exibir uma pergunta de texto</a> | 
         <a href="../texto/criarTexto.php">criar pergunta de texto</a> | 
         <a href="../multipla/listarUmaMultipla.php">exibir uma pergunta de multipla escolha</a> | 
         <a href="../multipla/criarMultipla.php">criar pergunta de multipla escolha</a></nav>
@@ -22,7 +22,7 @@
         <table>
             <tr><th>nome</th><th>email</th><th>senha</th><th>Funcionalidades</th></tr>
             <?php
-            $arq=fopen("../usuarios.txt", "r") or die ("erro");
+            $arq=fopen("../../usuarios.txt", "r") or die ("erro");
             $index=0;
             $existe=false;
             while(($linha=fgets($arq))!==false){

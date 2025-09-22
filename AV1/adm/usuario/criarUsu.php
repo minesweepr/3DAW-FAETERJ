@@ -5,11 +5,11 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $email=$_POST['email'];
     $senha=$_POST['senha'];
 
-    if(!file_exists("../usuarios.txt")){
-        $arq=fopen("../usuarios.txt", "w") or die ("erro");
+    if(!file_exists("../../usuarios.txt")){
+        $arq=fopen("../../usuarios.txt", "w") or die ("erro");
         fclose($arq);
     }
-    $arq=fopen("../usuarios.txt", "a") or die ("erro");
+    $arq=fopen("../../usuarios.txt", "a") or die ("erro");
     $linha="$nome;$email;$senha\n";
     fwrite($arq, $linha);
     fclose($arq);
@@ -22,7 +22,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>criar pergunta texto</title>
+  <title>sistema corporativo</title>
   <style>label{display:flex;flex-direction:row;}</style>
 </head>
 
@@ -31,7 +31,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         <h1>criar pergunta texto</h1>
 
         <nav><a href="../listarPerguntas.php">listar perguntas</a> | 
-        <a href="../texto/listarUmaTexto.php">exibir uma pergunta de texto</a> | 
+        <a href="../texto/listarUmTexto.php">exibir uma pergunta de texto</a> | 
         <a href="../texto/criarTexto.php">criar pergunta de texto</a> | 
         <a href="../multipla/listarUmaMultipla.php">exibir uma pergunta de multipla escolha</a> | 
         <a href="../multipla/criarMultipla.php">criar pergunta de multipla escolha</a></nav>

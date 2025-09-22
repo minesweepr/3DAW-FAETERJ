@@ -2,7 +2,7 @@
 if(!isset($_GET['id']))die;
 
 $id=intval($_GET['id']);
-$arq=fopen("../perguntasTexto.txt", "r") or die("erro ao abrir o arquivo");
+$arq=fopen("../../perguntasTexto.txt", "r") or die("erro ao abrir o arquivo");
 while(!feof($arq)) {
     $linha=fgets($arq);
     if($linha===false) continue;
@@ -14,7 +14,7 @@ fclose($arq);
 if(!isset($linhas[$id]))die("pergunta nao encontrada");
 
 unset($linhas[$id]);
-file_put_contents("../perguntasTexto.txt", implode("\n", $linhas)."\n");
+file_put_contents("../../perguntasTexto.txt", implode("\n", $linhas)."\n");
 header("Location: ../listarPerguntas.php");
 exit;
 ?>

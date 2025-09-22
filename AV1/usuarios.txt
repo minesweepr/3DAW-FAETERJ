@@ -1,2 +1,1 @@
-gabriel;gmail.com.br;senha123
-vinicius;@hotmail.com;senhaa789
+gabriel;gabriel@hotmail.com;senha123

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>buscar uma usuario</title>
+  <title>sistema corporativo</title>
 </head>
 
 <body>
@@ -10,7 +10,7 @@
         <h1>buscar uma usuario</h1>
 
         <nav><a href="../listarPerguntas.php">listar perguntas</a> | 
-        <a href="../texto/listarUmaTexto.php">exibir uma pergunta de texto</a> | 
+        <a href="../texto/listarUmTexto.php">exibir uma pergunta de texto</a> | 
         <a href="../texto/criarTexto.php">criar pergunta de texto</a> | 
         <a href="../multipla/listarUmaMultipla.php">exibir uma pergunta de multipla escolha</a> | 
         <a href="../multipla/criarMultipla.php">criar pergunta de multipla escolha</a></nav>
@@ -30,7 +30,7 @@
 
             if($busca=="")echo "<p>insira algo</p>";
             else{
-                $arq=fopen("../usuarios.txt", "r") or die("erro");
+                $arq=fopen("../../usuarios.txt", "r") or die("erro");
                 $achou=false;
 
                 while(($linha=fgets($arq))!==false){
