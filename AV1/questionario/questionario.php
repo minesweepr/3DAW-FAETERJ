@@ -31,7 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
     fclose($arqMulti);
     fclose($arquivo);
-    echo "sucesso";
+    header("Location: ../index.html");
+exit;
 }
 ?>
 
