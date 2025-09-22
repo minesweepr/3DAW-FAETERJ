@@ -37,8 +37,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         <a href="../multipla/criarMultipla.php">criar pergunta de multipla escolha</a></nav>
 
         <nav><a href="listarUsu.php">listar usuarios</a> | 
-        <a href="listarUmUsu.php">criar usuario</a> | 
-        <a href="criarUsu.php">exibir um usuario</a></nav>
+        <a href="criarUsu.php">criar usuario</a> | 
+        <a href="listarUmUsu.php">exibir um usuario</a></nav>
 
         <form action="criarUsu.php" method="POST">
             <label for="nome">
