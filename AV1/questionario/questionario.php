@@ -41,6 +41,9 @@ exit;
 <head>
   <meta charset="UTF-8" />
   <title>questionario</title>
+  <link rel="stylesheet" href="../style/geral.css"> 
+  <link rel="stylesheet" href="../style/form.css"> 
+  <link rel="stylesheet" href="../style/questionario.css"> 
 </head>
 
 <body>
@@ -100,7 +103,7 @@ exit;
             fclose($arqMulti);
             ?>
             </fieldset>
-            <button type="submit" value="Submit">enviar</button>
+            <button class="btn" type="submit" value="Submit">enviar</button>
         </form>
       </main>
   </body>

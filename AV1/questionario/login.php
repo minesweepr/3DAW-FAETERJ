@@ -39,12 +39,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 <head>
   <meta charset="UTF-8" />
   <title>questionario</title>
-  <style>label{display:flex;flex-direction:row;}</style>
+  <link rel="stylesheet" href="../style/geral.css"> 
+  <link rel="stylesheet" href="../style/form.css"> 
+  <link rel="stylesheet" href="../style/login.css"> 
 </head>
 
 <body>
     <main>
-        <h1>login</h1>
+        <h1>login/cadastro do usuário</h1>
 
         <form action="login.php" method="POST">
             <label for="nome">
@@ -57,7 +59,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 senha: <input type="password" name="senha" id="senha">
             </label>
 
-            <button type="submit" value="Submit">logar</button>
+            <button class="btn" type="submit" value="Submit">logar</button>
         </form>
       </main>
   </body>

@@ -3,22 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <title>sistema corporativo</title> 
+  <link rel="stylesheet" href="../../style/geral.css"> 
+  <link rel="stylesheet" href="../../style/tabela.css"> 
+  <link rel="stylesheet" href="../../style/form.css"> 
 </head>
 
 <body>
+    <nav>
+        <ul>
+          <li><a href="../listarPerguntas.php">inicio</a></li>
+        
+          <li>
+            <a href="#">discursivas ▼</a>
+            <ul>
+              <li><a href="../texto/listarUmTexto.php">exibir uma pergunta</a></li>
+              <li><a href="../texto/criarTexto.php">criar pergunta</a></li>
+            </ul>
+          </li>
+      
+          <li>
+            <a href="#">multipla escolha ▼</a>
+            <ul>
+              <li><a href="../multipla/listarUmaMultipla.php">exibir uma pergunta</a></li>
+              <li><a href="../multipla/criarMultipla.php">criar pergunta</a></li>
+            </ul>
+          </li>
+      
+          <li>
+            <a href="#">usuários ▼</a>
+            <ul>
+              <li><a href="listarUsu.php">listar usuários</a></li>
+              <li><a href="listarUmUsu.php">exibir um usuário</a></li>
+              <li><a href="criarUsu.php">criar usuário</a></li>
+            </ul>
+          </li>
+      
+          <li class="sair"><a href="../../index.html">sair</a></li>
+        </ul>
+    </nav>
+
     <main>
         <h1>Listar todas os usuarios</h1>
-
-        <nav><a href="../listarPerguntas.php">listar perguntas</a> | 
-        <a href="../texto/listarUmTexto.php">exibir uma pergunta de texto</a> | 
-        <a href="../texto/criarTexto.php">criar pergunta de texto</a> | 
-        <a href="../multipla/listarUmaMultipla.php">exibir uma pergunta de multipla escolha</a> | 
-        <a href="../multipla/criarMultipla.php">criar pergunta de multipla escolha</a></nav>
-
-        <nav><a href="listarUsu.php">listar usuarios</a> | 
-        <a href="criarUsu.php">criar usuario</a> | 
-        <a href="listarUmUsu.php">exibir um usuario</a></nav>
-        
         <table>
             <tr><th>nome</th><th>email</th><th>senha</th><th>Funcionalidades</th></tr>
             <?php

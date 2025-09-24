@@ -3,28 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <title>sistema corporativo</title>
-  <style>
-    table{text-align:center; margin-bottom:20px;}
-    table, th, td{border: 1px solid black;border-collapse: collapse;padding:5px;}
-  </style>  
+  <link rel="stylesheet" href="../style/geral.css"> 
+  <link rel="stylesheet" href="../style/tabela.css">  
 </head>
 
 <body>
-    <main>
-        <h1>Listar todas as perguntas</h1>
-
-        <nav><a href="listarPerguntas.php">listar perguntas</a> | 
-        <a href="texto/listarUmTexto.php">exibir uma pergunta de texto</a> | 
-        <a href="texto/criarTexto.php">criar pergunta de texto</a> | 
-        <a href="multipla/listarUmaMultipla.php">exibir uma pergunta de multipla escolha</a> | 
-        <a href="multipla/criarMultipla.php">criar pergunta de multipla escolha</a></nav>
-
-        <nav><a href="usuario/listarUsu.php">listar usuarios</a> | 
-        <a href="usuario/listarUmUsu.php">criar usuario</a> | 
-        <a href="usuario/criarUsu.php">exibir um usuario</a></nav>
+    <nav>
+        <ul>
+          <li><a href="#">inicio</a></li>
         
+          <li>
+            <a href="#">discursivas ▼</a>
+            <ul>
+              <li><a href="texto/listarUmTexto.php">exibir uma pergunta</a></li>
+              <li><a href="texto/criarTexto.php">criar pergunta</a></li>
+            </ul>
+          </li>
+      
+          <li>
+            <a href="#">multipla escolha ▼</a>
+            <ul>
+              <li><a href="multipla/listarUmaMultipla.php">exibir uma pergunta</a></li>
+              <li><a href="multipla/criarMultipla.php">criar pergunta</a></li>
+            </ul>
+          </li>
+      
+          <li>
+            <a href="#">usuários ▼</a>
+            <ul>
+              <li><a href="usuario/listarUsu.php">listar usuários</a></li>
+              <li><a href="usuario/listarUmUsu.php">exibir um usuário</a></li>
+              <li><a href="usuario/criarUsu.php">criar usuário</a></li>
+            </ul>
+          </li>
+      
+          <li class="sair"><a href="../index.html">sair</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>lista de perguntas</h1>
+        <h2>perguntas discursivas</h2>
         <table>
-            <tr><th>id</th><th>pergunta</th><th>Funcionalidades</th></tr>
+            <tr><th>id</th><th>pergunta</th><th>funcionalidades</th></tr>
             <?php
             $arqTexto=fopen("../perguntasTexto.txt", "r") or die ("erro");
             $index=0;
@@ -53,6 +74,7 @@
             ?>
         </table>
 
+        <h2>perguntas de múltipla escolha</h2>
         <table>
             <tr><th>id</th><th>pergunta</th><th>opção 1</th><th>opção 2</th><th>opção 3</th><th>resposta</th><th>Funcionalidades</th></tr>
             <?php
@@ -87,6 +109,7 @@
             ?>
         </table>
 
+        <h1>lista de usuários</h1>
         <table>
             <tr><th>email</th><th>pergunta</th><th>resposta</th></tr>
             <?php

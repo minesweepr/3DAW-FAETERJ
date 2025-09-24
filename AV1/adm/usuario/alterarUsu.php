@@ -33,21 +33,45 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     <head>
         <meta charset="UTF-8">
         <title>sistema corporativo</title>
+        <link rel="stylesheet" href="../../style/geral.css"> 
+        <link rel="stylesheet" href="../../style/form.css"> 
     </head>
     <body>
-        <h1>alterar usuario</h1>
+        <nav>
+        <ul>
+          <li><a href="../listarPerguntas.php">inicio</a></li>
         
-        <nav><a href="../listarPerguntas.php">listar perguntas</a> | 
-        <a href="../texto/listarUmTexto.php">exibir uma pergunta de texto</a> | 
-        <a href="../texto/criarTexto.php">criar pergunta de texto</a> | 
-        <a href="../multipla/listarUmaMultipla.php">exibir uma pergunta de multipla escolha</a> | 
-        <a href="../multipla/criarMultipla.php">criar pergunta de multipla escolha</a></nav>
+          <li>
+            <a href="#">discursivas ▼</a>
+            <ul>
+              <li><a href="../texto/listarUmTexto.php">exibir uma pergunta</a></li>
+              <li><a href="../texto/criarTexto.php">criar pergunta</a></li>
+            </ul>
+          </li>
+      
+          <li>
+            <a href="#">multipla escolha ▼</a>
+            <ul>
+              <li><a href="../multipla/listarUmaMultipla.php">exibir uma pergunta</a></li>
+              <li><a href="../multipla/criarMultipla.php">criar pergunta</a></li>
+            </ul>
+          </li>
+      
+          <li>
+            <a href="#">usuários ▼</a>
+            <ul>
+              <li><a href="listarUsu.php">listar usuários</a></li>
+              <li><a href="listarUmUsu.php">exibir um usuário</a></li>
+              <li><a href="criarUsu.php">criar usuário</a></li>
+            </ul>
+          </li>
+      
+          <li class="sair"><a href="../../index.html">sair</a></li>
+        </ul>
+    </nav>
 
-        <nav><a href="listarUsu.php">listar usuarios</a> | 
-        <a href="criarUsu.php">criar usuario</a> | 
-        <a href="listarUmUsu.php">exibir um usuario</a></nav>
-        
         <main>
+            <h1>alterar usuario</h1>
             <form action="alterarUsu.php?id=<?php echo $id; ?>" method="POST">
                 <label for="nome">
                     nome: <input type="text" name="nome" id="nome" value="<?php echo "$coluna[0]"; ?>">
@@ -59,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
                     senha: <input type="text" name="senha" id="senha" value="<?php echo "$coluna[2]"; ?>">
                 </label>
 
-                <button type="submit" value="Submit">enviar</button>
+                <button class="btn" type="submit" value="Submit">enviar</button>
             </form>
         </main>
     </body>

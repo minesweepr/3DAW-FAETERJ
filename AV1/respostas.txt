@@ -3,3 +3,8 @@ gabriel@hotmail.com;qual sua média salarial?;R$5000000000000,99
 gabriel@hotmail.com;escolha entre as seguintes opções;a
 gabriel@hotmail.com;resultado de 1+3;4
 gabriel@hotmail.com;qual o melhor número?;3
+vzn@gmail.com;o que você espera da empresa?;empregabilidade
+vzn@gmail.com;qual sua média salarial?;R$10000
+vzn@gmail.com;escolha entre as seguintes opções;b
+vzn@gmail.com;resultado de 1+3;4
+vzn@gmail.com;qual o melhor número?;3

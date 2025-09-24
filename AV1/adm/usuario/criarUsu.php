@@ -23,23 +23,46 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 <head>
   <meta charset="UTF-8" />
   <title>sistema corporativo</title>
-  <style>label{display:flex;flex-direction:row;}</style>
+  <link rel="stylesheet" href="../../style/geral.css"> 
+  <link rel="stylesheet" href="../../style/form.css"> 
 </head>
 
 <body>
+    <nav>
+        <ul>
+          <li><a href="../listarPerguntas.php">inicio</a></li>
+        
+          <li>
+            <a href="#">discursivas ▼</a>
+            <ul>
+              <li><a href="../texto/listarUmTexto.php">exibir uma pergunta</a></li>
+              <li><a href="../texto/criarTexto.php">criar pergunta</a></li>
+            </ul>
+          </li>
+      
+          <li>
+            <a href="#">multipla escolha ▼</a>
+            <ul>
+              <li><a href="../multipla/listarUmaMultipla.php">exibir uma pergunta</a></li>
+              <li><a href="../multipla/criarMultipla.php">criar pergunta</a></li>
+            </ul>
+          </li>
+      
+          <li>
+            <a href="#">usuários ▼</a>
+            <ul>
+              <li><a href="listarUsu.php">listar usuários</a></li>
+              <li><a href="listarUmUsu.php">exibir um usuário</a></li>
+              <li><a href="criarUsu.php">criar usuário</a></li>
+            </ul>
+          </li>
+      
+          <li class="sair"><a href="../../index.html">sair</a></li>
+        </ul>
+    </nav>
+
     <main>
         <h1>criar pergunta texto</h1>
-
-        <nav><a href="../listarPerguntas.php">listar perguntas</a> | 
-        <a href="../texto/listarUmTexto.php">exibir uma pergunta de texto</a> | 
-        <a href="../texto/criarTexto.php">criar pergunta de texto</a> | 
-        <a href="../multipla/listarUmaMultipla.php">exibir uma pergunta de multipla escolha</a> | 
-        <a href="../multipla/criarMultipla.php">criar pergunta de multipla escolha</a></nav>
-
-        <nav><a href="listarUsu.php">listar usuarios</a> | 
-        <a href="criarUsu.php">criar usuario</a> | 
-        <a href="listarUmUsu.php">exibir um usuario</a></nav>
-
         <form action="criarUsu.php" method="POST">
             <label for="nome">
                 nome: <input type="text" name="nome" id="nome">
@@ -51,7 +74,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 senha: <input type="text" name="senha" id="senha">
             </label>
 
-            <button type="submit" value="Submit">enviar</button>
+            <button class="btn" type="submit" value="Submit">enviar</button>
         </form>
         <?php echo $msg;?>
       </main>

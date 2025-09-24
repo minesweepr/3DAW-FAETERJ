@@ -1,0 +1,36 @@
+main h1 {
+     text-align: center;
+}
+fieldset {
+     border: 1px solid #c7cfd6;
+     border-radius: 8px;
+     padding: 20px;
+     margin-bottom: 20px;
+}
+legend {
+     font-weight: bold;
+     padding: 0 10px;
+     color: #34495e;
+     font-size: 20px;
+}
+p{
+     margin-bottom: 8px;
+     font-weight: 500;
+}
+textarea{
+     width: 98%;
+     padding: 10px;
+     border-radius: 6px;
+     border: 1px solid #c7cfd6;
+     resize: vertical;
+     margin-bottom: 15px;
+}
+input[type="radio"]{
+     margin-right: 8px;
+     cursor: pointer;
+}
+/*botao*/
+button{
+     display: block;
+     margin: 0 auto;
+}

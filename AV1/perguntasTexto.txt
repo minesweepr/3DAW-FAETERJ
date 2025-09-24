@@ -1,2 +1,2 @@
-155;o que você espera da empresa?;
+2;o que você espera da empresa?;
 11;qual sua média salarial?;
