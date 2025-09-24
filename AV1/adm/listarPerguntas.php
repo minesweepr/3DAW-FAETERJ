@@ -109,7 +109,7 @@
             ?>
         </table>
 
-        <h1>lista de usuários</h1>
+        <h1>lista respostas</h1>
         <table>
             <tr><th>email</th><th>pergunta</th><th>resposta</th></tr>
             <?php
