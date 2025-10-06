@@ -38,7 +38,7 @@
             </ul>
           </li>
       
-          <li class="sair"><a href="../../../index.html">sair</a></li>
+          <li class="sair"><a href="../../../index.php">sair</a></li>
         </ul>
     </nav>
 
@@ -55,7 +55,7 @@
 
             if($busca=="")echo "<p>insira algo</p>";
             else{
-                $arq=fopen("../../../perguntasTexto.php", "r") or die("erro");
+                $arq=fopen("../../../perguntasTexto.txt", "r") or die("erro");
                 $achou=false;
 
                 while(($linha=fgets($arq))!==false){
