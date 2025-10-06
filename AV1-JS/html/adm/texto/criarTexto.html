@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>sistema corporativo</title>
+  <link rel="stylesheet" href="../../../css/geral.css"> 
+  <link rel="stylesheet" href="../../../css/form.css"> 
+
+  <script src="../../../js/adm/GETxml.js"></script>
+  <script>
+    function criarTexto(){
+      let idp=document.getElementById("idp").value;
+      let pergunta=document.getElementById("pergunta").value;
+
+      let params="idp=" + idp + "&pergunta=" + pergunta;
+      enviarXML("../../../php/adm/texto/criarTexto.php", params, "msg");
+  }
+  </script>
+</head>
+
+<body>
+    <nav>
+        <ul>
+          <li><a href="../../../php/adm/listarPerguntas.php">inicio</a></li>
+        
+          <li>
+            <a href="#">discursivas ▼</a>
+            <ul>
+              <li><a href="../../../php/adm/texto/listarUmTexto.php">exibir uma pergunta</a></li>
+              <li><a href="../texto/criarTexto.html">criar pergunta</a></li>
+            </ul>
+          </li>
+      
+          <li>
+            <a href="#">multipla escolha ▼</a>
+            <ul>
+              <li><a href="../../../php/adm/multipla/listarUmaMultipla.php">exibir uma pergunta</a></li>
+              <li><a href="../multipla/criarMultipla.html">criar pergunta</a></li>
+            </ul>
+          </li>
+      
+          <li>
+            <a href="#">usuários ▼</a>
+            <ul>
+              <li><a href="../../../php/adm/usuario/listarUsu.php">listar usuários</a></li>
+              <li><a href="../../../php/adm/usuario/listarUmUsu.php">exibir um usuário</a></li>
+              <li><a href="../usuario/criarUsu.html">criar usuário</a></li>
+            </ul>
+          </li>
+      
+          <li class="sair"><a href="../../../index.php">sair</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>criar pergunta texto</h1>
+
+        <form action="" method="GET">
+            <label for="idp">
+                id: <input type="number" name="idp" id="idp">
+            </label>
+            <label for="pergunta">
+                pergunta: <input type="text" name="pergunta" id="pergunta">
+            </label>
+
+            <button type="button" class="btn" onclick="criarTexto()">enviar</button>
+        </form>
+        <p id="msg"></p>
+      </main>
+  </body>
+</html>

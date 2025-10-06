@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>sistema corporativo</title>
-  <link rel="stylesheet" href="../style/geral.css"> 
-  <link rel="stylesheet" href="../style/tabela.css">  
+  <link rel="stylesheet" href="../../css/geral.css"> 
+  <link rel="stylesheet" href="../../css/tabela.css">  
 </head>
 
 <body>
@@ -16,7 +16,7 @@
             <a href="#">discursivas ▼</a>
             <ul>
               <li><a href="texto/listarUmTexto.php">exibir uma pergunta</a></li>
-              <li><a href="texto/criarTexto.php">criar pergunta</a></li>
+              <li><a href="../../html/adm/texto/criarTexto.html">criar pergunta</a></li>
             </ul>
           </li>
       
@@ -24,7 +24,7 @@
             <a href="#">multipla escolha ▼</a>
             <ul>
               <li><a href="multipla/listarUmaMultipla.php">exibir uma pergunta</a></li>
-              <li><a href="multipla/criarMultipla.php">criar pergunta</a></li>
+              <li><a href="../../html/adm/multipla/criarMultipla.html">criar pergunta</a></li>
             </ul>
           </li>
       
@@ -33,11 +33,11 @@
             <ul>
               <li><a href="usuario/listarUsu.php">listar usuários</a></li>
               <li><a href="usuario/listarUmUsu.php">exibir um usuário</a></li>
-              <li><a href="usuario/criarUsu.php">criar usuário</a></li>
+              <li><a href="../../html/adm/usuario/criarUsu.html">criar usuário</a></li>
             </ul>
           </li>
       
-          <li class="sair"><a href="../index.php">sair</a></li>
+          <li class="sair"><a href="../../index.php">sair</a></li>
         </ul>
     </nav>
 
@@ -47,7 +47,7 @@
         <table>
             <tr><th>id</th><th>pergunta</th><th>funcionalidades</th></tr>
             <?php
-            $arqTexto=fopen("../perguntasTexto.txt", "r") or die ("erro");
+            $arqTexto=fopen("../../perguntasTexto.txt", "r") or die ("erro");
             $index=0;
             $existe=false;
             while(($linha=fgets($arqTexto))!==false){
@@ -68,7 +68,7 @@
                 $index++;
                 $existe=true;
             }
-            if(!$existe)echo "nenhuma pergunta cadastrado.";
+            if(!$existe)echo "nenhuma pergunta cadastrada.";
             
             fclose($arqTexto);
             ?>
@@ -78,7 +78,7 @@
         <table>
             <tr><th>id</th><th>pergunta</th><th>opção 1</th><th>opção 2</th><th>opção 3</th><th>resposta</th><th>Funcionalidades</th></tr>
             <?php
-            $arqMulti=fopen("../perguntasMulti.txt", "r") or die ("erro");
+            $arqMulti=fopen("../../perguntasMulti.txt", "r") or die ("erro");
             $index=0;
             $existe=false;
             while(($linha=fgets($arqMulti))!==false){
@@ -103,7 +103,7 @@
                 $index++;
                 $existe=true;
             }
-            if(!$existe)echo "nenhuma pergunta cadastrado.";
+            if(!$existe)echo "nenhuma pergunta cadastrada.";
             
             fclose($arqMulti);
             ?>
@@ -113,7 +113,7 @@
         <table>
             <tr><th>email</th><th>pergunta</th><th>resposta</th></tr>
             <?php
-            $arqResp=fopen("../respostas.txt", "r") or die ("erro");
+            $arqResp=fopen("../../respostas.txt", "r") or die ("erro");
             $existe=false;
             while(($linha=fgets($arqResp))!==false){
                 if($linha=="")continue;

@@ -2,8 +2,8 @@
 session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $email=$_SESSION['email'];
-    $arquivo=fopen("../respostas.txt", "a") or die("erro a 1");
-    $arqTexto=fopen("../perguntasTexto.txt", "r") or die("erro r 1");
+    $arquivo=fopen("../../respostas.txt", "a") or die("erro a 1");
+    $arqTexto=fopen("../../perguntasTexto.txt", "r") or die("erro r 1");
     $index=1;
     while (($linha=fgets($arqTexto))!==false){
         if($linha=="")continue;
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
     fclose($arqTexto);
 
-    $arqMulti=fopen("../perguntasMulti.txt", "r") or die("erro r 2");
+    $arqMulti=fopen("../../perguntasMulti.txt", "r") or die("erro r 2");
     $index=1;
     while (($linha=fgets($arqMulti))!==false){
         if($linha=="") continue;
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
     fclose($arqMulti);
     fclose($arquivo);
-    header("Location: ../index.php");
+    header("Location: ../../index.php");
 exit;
 }
 ?>
@@ -41,9 +41,9 @@ exit;
 <head>
   <meta charset="UTF-8" />
   <title>questionario</title>
-  <link rel="stylesheet" href="../style/geral.css"> 
-  <link rel="stylesheet" href="../style/form.css"> 
-  <link rel="stylesheet" href="../style/questionario.css"> 
+  <link rel="stylesheet" href="../../css/geral.css"> 
+  <link rel="stylesheet" href="../../css/form.css"> 
+  <link rel="stylesheet" href="../../css/questionario.css"> 
 </head>
 
 <body>
@@ -53,7 +53,7 @@ exit;
         <legend>perguntas textuais</legend>
         <form action="questionario.php" method="POST">
             <?php
-            $arqTexto=fopen("../perguntasTexto.txt", "r") or die ("erro");
+            $arqTexto=fopen("../../perguntasTexto.txt", "r") or die ("erro");
             $index=1;
             $existe=false;
             while(($linha=fgets($arqTexto))!==false){
@@ -77,7 +77,7 @@ exit;
             <fieldset>
             <legend>perguntas de multipla escolha</legend>
             <?php
-            $arqMulti=fopen("../perguntasMulti.txt", "r") or die ("erro");
+            $arqMulti=fopen("../../perguntasMulti.txt", "r") or die ("erro");
             $index=1;
             $existe=false;
             while(($linha=fgets($arqMulti))!==false){

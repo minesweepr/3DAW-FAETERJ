@@ -1,0 +1,22 @@
+gabriel@hotmail.com;o que você espera da empresa?;muito
+gabriel@hotmail.com;qual sua média salarial?;R$5000000000000,99
+gabriel@hotmail.com;escolha entre as seguintes opções;a
+gabriel@hotmail.com;resultado de 1+3;4
+gabriel@hotmail.com;qual o melhor número?;3
+vzn@gmail.com;o que você espera da empresa?;empregabilidade
+vzn@gmail.com;qual sua média salarial?;R$10000
+vzn@gmail.com;escolha entre as seguintes opções;b
+vzn@gmail.com;resultado de 1+3;4
+vzn@gmail.com;qual o melhor número?;3
+teste@teste.com;o que você espera da empresa?;3
+teste@teste.com;qual sua média salarial?;2
+teste@teste.com;1;1
+teste@teste.com;escolha entre as seguintes opções;c
+teste@teste.com;resultado de 1+3;4
+teste@teste.com;qual o melhor número?;0
+teste@teste.com;o que você espera da empresa?;5
+teste@teste.com;qual sua média salarial?;4
+teste@teste.com;1;3
+teste@teste.com;escolha entre as seguintes opções;c
+teste@teste.com;resultado de 1+3;77
+teste@teste.com;qual o melhor número?;3

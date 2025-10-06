@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>sistema corporativo</title>
-  <link rel="stylesheet" href="../../style/geral.css"> 
-  <link rel="stylesheet" href="../../style/tabela.css"> 
-  <link rel="stylesheet" href="../../style/form.css"> 
+  <link rel="stylesheet" href="../../../css/geral.css"> 
+  <link rel="stylesheet" href="../../../css/tabela.css"> 
+  <link rel="stylesheet" href="../../../css/form.css"> 
 </head>
 
 <body>
@@ -17,15 +17,15 @@
             <a href="#">discursivas ▼</a>
             <ul>
               <li><a href="../texto/listarUmTexto.php">exibir uma pergunta</a></li>
-              <li><a href="../texto/criarTexto.php">criar pergunta</a></li>
+              <li><a href="../../../html/adm/texto/criarTexto.html">criar pergunta</a></li>
             </ul>
           </li>
       
           <li>
             <a href="#">multipla escolha ▼</a>
             <ul>
-              <li><a href="listarUmaMultipla.php">exibir uma pergunta</a></li>
-              <li><a href="criarMultipla.php">criar pergunta</a></li>
+              <li><a href="../multipla/listarUmaMultipla.php">exibir uma pergunta</a></li>
+              <li><a href="../../../html/adm/multipla/criarMultipla.html">criar pergunta</a></li>
             </ul>
           </li>
       
@@ -34,11 +34,11 @@
             <ul>
               <li><a href="../usuario/listarUsu.php">listar usuários</a></li>
               <li><a href="../usuario/listarUmUsu.php">exibir um usuário</a></li>
-              <li><a href="../usuario/criarUsu.php">criar usuário</a></li>
+              <li><a href="../../../html/adm/usuario/criarUsu.html">criar usuário</a></li>
             </ul>
           </li>
       
-          <li class="sair"><a href="../../index.php">sair</a></li>
+          <li class="sair"><a href="../../../index.php">sair</a></li>
         </ul>
     </nav>
 
@@ -56,7 +56,7 @@
 
             if($busca=="")echo "<p>insira algo</p>";
             else{
-                $arq=fopen("../../perguntasMulti.txt", "r") or die("erro");
+                $arq=fopen("../../../perguntasMulti.txt", "r") or die("erro");
                 $achou=false;
 
                 while(($linha=fgets($arq))!==false){

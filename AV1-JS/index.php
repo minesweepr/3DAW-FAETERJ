@@ -5,13 +5,18 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $email=$_SESSION['email']=$_POST['email'];//https://www.reddit.com/r/PHPhelp/comments/mp75pq/how_do_you_store_a_php_variable_in_between_page/
     $senha=$_POST['senha'];
 
-    if(!file_exists("../usuarios.txt")){
-        $arq=fopen("../usuarios.txt", "w") or die ("erro");
+    if ($email==='adm@adm.com' || $nome==='adm'){
+        header("Location: php/adm/listarPerguntas.php");
+        exit;
+    }
+
+    if(!file_exists("usuarios.txt")){
+        $arq=fopen("usuarios.txt", "w") or die ("erro");
         fclose($arq);
     }
 
     $duplicado=false;
-    $arq=fopen("../usuarios.txt", "r") or die ("erro");
+    $arq=fopen("usuarios.txt", "r") or die ("erro");
     while(($linha=fgets($arq))!==false){
         $coluna=explode(";", trim($linha));
         if(count($coluna)>2){
@@ -24,12 +29,12 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     fclose($arq);
 
     if(!$duplicado){
-        $arq=fopen("../usuarios.txt", "a") or die ("erro");
+        $arq=fopen("usuarios.txt", "a") or die ("erro");
         $linha="$nome;$email;$senha\n";
         fwrite($arq, $linha);
         fclose($arq);
     }
-    header("Location: questionario.php");
+    header("Location: php/questionario/questionario.php");
 
 }
 ?>
@@ -39,16 +44,16 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 <head>
   <meta charset="UTF-8" />
   <title>questionario</title>
-  <link rel="stylesheet" href="../style/geral.css"> 
-  <link rel="stylesheet" href="../style/form.css"> 
-  <link rel="stylesheet" href="../style/login.css"> 
+  <link rel="stylesheet" href="css/geral.css"> 
+  <link rel="stylesheet" href="css/form.css"> 
+  <link rel="stylesheet" href="css/login.css"> 
 </head>
 
 <body>
     <main>
         <h1>login/cadastro do usuário</h1>
 
-        <form action="login.php" method="POST">
+        <form action="index.php" method="POST">
             <label for="nome">
                 nome: <input type="text" name="nome" id="nome">
             </label>

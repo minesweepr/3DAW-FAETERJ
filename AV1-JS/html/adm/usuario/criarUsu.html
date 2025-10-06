@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>sistema corporativo</title>
+  <link rel="stylesheet" href="../../../css/geral.css"> 
+  <link rel="stylesheet" href="../../../css/form.css"> 
+
+  <script src="../../../js/adm/POSTxml.js"></script>
+  <script>
+    function criarUsu(){
+      let nome=document.getElementById("nome").value;
+      let email=document.getElementById("email").value;
+      let senha=document.getElementById("senha").value;
+
+      let params = "nome=" + nome + "&email=" + email + "&senha=" + senha;
+
+      enviarXML("../../../php/adm/usuario/criarUsu.php", params, "msg");
+  }
+  </script>
+</head>
+
+<body>
+    <nav>
+        <ul>
+          <li><a href="../../../php/adm/listarPerguntas.php">inicio</a></li>
+        
+          <li>
+            <a href="#">discursivas ▼</a>
+            <ul>
+              <li><a href="../../../php/adm/texto/listarUmTexto.php">exibir uma pergunta</a></li>
+              <li><a href="../texto/criarTexto.html">criar pergunta</a></li>
+            </ul>
+          </li>
+      
+          <li>
+            <a href="#">multipla escolha ▼</a>
+            <ul>
+              <li><a href="../../../php/adm/multipla/listarUmaMultipla.php">exibir uma pergunta</a></li>
+              <li><a href="../multipla/criarMultipla.html">criar pergunta</a></li>
+            </ul>
+          </li>
+      
+          <li>
+            <a href="#">usuários ▼</a>
+            <ul>
+              <li><a href="../../../php/adm/usuario/listarUsu.php">listar usuários</a></li>
+              <li><a href="../../../php/adm/usuario/listarUmUsu.php">exibir um usuário</a></li>
+              <li><a href="../usuario/criarUsu.html">criar usuário</a></li>
+            </ul>
+          </li>
+      
+          <li class="sair"><a href="../../../index.php">sair</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>criar usuario</h1>
+        <form action="criarUsu.php" method="POST">
+            <label for="nome">
+                nome: <input type="text" name="nome" id="nome">
+            </label>
+            <label for="email">
+                email: <input type="text" name="email" id="email">
+            </label>
+            <label for="senha">
+                senha: <input type="text" name="senha" id="senha">
+            </label>
+
+            <button type="button" class="btn" onclick="criarUsu()">enviar</button>
+        </form>
+        <p id="msg"></p>
+      </main>
+  </body>
+</html>

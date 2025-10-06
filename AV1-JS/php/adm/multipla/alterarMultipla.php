@@ -1,6 +1,6 @@
 <?php
-if (file_exists("../../perguntasMulti.txt")) {
-    $arq=fopen("../../perguntasMulti.txt", "r") or die("erro ao abrir o arq1");
+if (file_exists("../../../perguntasMulti.txt")) {
+    $arq=fopen("../../../perguntasMulti.txt", "r") or die("erro ao abrir o arq1");
     while (($linha=fgets($arq))!==false) {
         $linhas[]=explode(";", trim($linha));
     }
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     $resposta=$_POST['resposta'];
 
     $linhas[$id]=[$idp, $pergunta, $opc1, $opc2, $opc3, $resposta];
-    $arq=fopen("../../perguntasMulti.txt", "w") or die("erro ao escrever o arq2");
+    $arq=fopen("../../../perguntasMulti.txt", "w") or die("erro ao escrever o arq2");
     foreach ($linhas as $coluna){
         $linha=implode(";", $coluna)."\n";
         fwrite($arq, $linha);
@@ -36,8 +36,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 <head>
   <meta charset="UTF-8" />
   <title>sistema corporativo</title>
-  <link rel="stylesheet" href="../../style/geral.css"> 
-  <link rel="stylesheet" href="../../style/form.css"> 
+  <link rel="stylesheet" href="../../../css/geral.css"> 
+  <link rel="stylesheet" href="../../../css/form.css"> 
 </head>
 
 <body>
@@ -49,15 +49,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
             <a href="#">discursivas ▼</a>
             <ul>
               <li><a href="../texto/listarUmTexto.php">exibir uma pergunta</a></li>
-              <li><a href="../texto/criarTexto.php">criar pergunta</a></li>
+              <li><a href="../../../html/adm/texto/criarTexto.html">criar pergunta</a></li>
             </ul>
           </li>
       
           <li>
             <a href="#">multipla escolha ▼</a>
             <ul>
-              <li><a href="listarUmaMultipla.php">exibir uma pergunta</a></li>
-              <li><a href="criarMultipla.php">criar pergunta</a></li>
+              <li><a href="../multipla/listarUmaMultipla.php">exibir uma pergunta</a></li>
+              <li><a href="../../../html/adm/multipla/criarMultipla.html">criar pergunta</a></li>
             </ul>
           </li>
       
@@ -66,11 +66,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
             <ul>
               <li><a href="../usuario/listarUsu.php">listar usuários</a></li>
               <li><a href="../usuario/listarUmUsu.php">exibir um usuário</a></li>
-              <li><a href="../usuario/criarUsu.php">criar usuário</a></li>
+              <li><a href="../../../html/adm/usuario/criarUsu.html">criar usuário</a></li>
             </ul>
           </li>
       
-          <li class="sair"><a href="../../index.php">sair</a></li>
+          <li class="sair"><a href="../../../index.php">sair</a></li>
         </ul>
     </nav>
 

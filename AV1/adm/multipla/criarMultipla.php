@@ -60,7 +60,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             </ul>
           </li>
       
-          <li class="sair"><a href="../../index.html">sair</a></li>
+          <li class="sair"><a href="../../index.php">sair</a></li>
         </ul>
     </nav>
 
