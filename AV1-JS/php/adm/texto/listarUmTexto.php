@@ -1,85 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8" />
-  <title>sistema corporativo</title>
-  <link rel="stylesheet" href="../../../css/geral.css"> 
-  <link rel="stylesheet" href="../../../css/tabela.css"> 
-  <link rel="stylesheet" href="../../../css/form.css"> 
-</head>
+<?php
+if($_SERVER['REQUEST_METHOD']=='GET'){
+    $id=$_GET["id"];
+    $resp=array();
 
-<body>
-    <nav>
-        <ul>
-          <li><a href="../listarPerguntas.php">inicio</a></li>
-        
-          <li>
-            <a href="#">discursivas ▼</a>
-            <ul>
-              <li><a href="../texto/listarUmTexto.php">exibir uma pergunta</a></li>
-              <li><a href="../../../html/adm/texto/criarTexto.html">criar pergunta</a></li>
-            </ul>
-          </li>
-      
-          <li>
-            <a href="#">multipla escolha ▼</a>
-            <ul>
-              <li><a href="../multipla/listarUmaMultipla.php">exibir uma pergunta</a></li>
-              <li><a href="../../../html/adm/multipla/criarMultipla.html">criar pergunta</a></li>
-            </ul>
-          </li>
-      
-          <li>
-            <a href="#">usuários ▼</a>
-            <ul>
-              <li><a href="../usuario/listarUsu.php">listar usuários</a></li>
-              <li><a href="../usuario/listarUmUsu.php">exibir um usuário</a></li>
-              <li><a href="../../../html/adm/usuario/criarUsu.html">criar usuário</a></li>
-            </ul>
-          </li>
-      
-          <li class="sair"><a href="../../../index.php">sair</a></li>
-        </ul>
-    </nav>
-
-    <main>
-        <h1>buscar uma pergunta texto</h1>
-        <form action="listarUmTexto.php" method="POST">
-            <input type="text" name="busca" placeholder="pergunta">
-            <button class="btn" type="submit" value="Submit">buscar</button>
-        </form>
-
-        <?php
-        if($_SERVER['REQUEST_METHOD']=='POST'){
-            $busca=trim($_POST['busca']);
-
-            if($busca=="")echo "<p>insira algo</p>";
-            else{
-                $arq=fopen("../../../perguntasTexto.txt", "r") or die("erro");
-                $achou=false;
-
-                while(($linha=fgets($arq))!==false){
-                    $coluna=explode(";", trim($linha));
-                    if (count($coluna)<2) continue;
-
-                    if (stripos($coluna[0], $busca)!== false||stripos($coluna[1], $busca)!==false) {
-                        echo "<table>
-                        <tr><th>id</th><th>pergunta</th></tr>
-                        <tr>
-                        <td>".$coluna[0]."</td>
-                        <td>".$coluna[1]."</td>
-                        </tr>
-                        </table>";
-                        $achou=true;
-                    }
-                }
+    $arq=fopen("../../../perguntasTexto.txt","r") or die("erro ao abrir arq");
+    while(!feof($arq)){
+        $linha=trim(fgets($arq));
+        if($linha!=""){
+            $colunaDados=explode(";", $linha);
+            if(count($colunaDados)>=2 && $colunaDados[0]==$id){
+                $resp["id"]=$colunaDados[0];
+                $resp["pergunta"]=$colunaDados[1];
+                break;
             }
-            if(!$achou){
-                echo "pergunta nao encontrada";
-            }
-            fclose($arq);
         }
-        ?>
-      </main>
-  </body>
-</html>
+    }
+    fclose($arq);
+    if(empty($resp)) $resp["erro"]="a pergunta nao foi encontrada";
+
+    $jPerguntas=json_encode($resp, JSON_UNESCAPED_UNICODE);
+    echo $jPerguntas;
+    exit;
+}
+?>

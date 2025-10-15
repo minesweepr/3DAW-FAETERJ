@@ -15,7 +15,7 @@
           <li>
             <a href="#">discursivas ▼</a>
             <ul>
-              <li><a href="texto/listarUmTexto.php">exibir uma pergunta</a></li>
+              <li><a href="../../html/adm/texto/AlterarExibirTexto.html">alterar/exibir uma pergunta</a></li>
               <li><a href="../../html/adm/texto/criarTexto.html">criar pergunta</a></li>
             </ul>
           </li>
@@ -23,7 +23,7 @@
           <li>
             <a href="#">multipla escolha ▼</a>
             <ul>
-              <li><a href="multipla/listarUmaMultipla.php">exibir uma pergunta</a></li>
+              <li><a href="../../html/adm/multipla/AlterarExibirMultipla.html">alterar/exibir uma pergunta</a></li>
               <li><a href="../../html/adm/multipla/criarMultipla.html">criar pergunta</a></li>
             </ul>
           </li>
@@ -60,7 +60,7 @@
                 <td>".$coluna[0]."</td>
                 <td>".$coluna[1]."</td>
                 <td>
-                    <a href='texto/alterarTexto.php?id=".$index."'>alterar</a> | 
+                    <a href='../../html/adm/texto/AlterarExibirTexto.html?id=".$coluna[0]."'>alterar</a> | 
                     <a href='texto/excluirTexto.php?id=".$index."' onclick=\"return confirm('tem certeza que deseja excluir esta pergunta?')\">excluir</a>
                 </td>
                 </tr>";
@@ -95,7 +95,7 @@
                 <td>".$coluna[4]."</td>
                 <td>".$coluna[5]."</td>
                 <td>
-                    <a href='multipla/alterarMultipla.php?id=".$index."'>alterar</a> | 
+                    <a href='../../html/adm/multipla/AlterarExibirMultipla.html?id=".$coluna[0]."'>alterar</a> | 
                     <a href='multipla/excluirMultipla.php?id=".$index."' onclick=\"return confirm('tem certeza que deseja excluir esta pergunta?')\">excluir</a>
                 </td>
                 </tr>";

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>sistema corporativo</title>
+  <link rel="stylesheet" href="../../../css/geral.css"> 
+  <link rel="stylesheet" href="../../../css/tabela.css"> 
+  <link rel="stylesheet" href="../../../css/form.css"> 
+
+      <script>
+    function buscarPergunta(){
+        let id=document.getElementById("idBusca").value;
+
+        let msg=ValidaForm(id, -1);
+        if(msg!==""){
+            document.getElementById("msg").innerHTML=msg;
+            return;
+        }
+
+        let xmlhttp=new XMLHttpRequest();
+        console.log("1");
+        xmlhttp.onreadystatechange=function(){
+            if(this.readyState== 4 && this.status==200){
+                try{
+                    let objReturnJSON=JSON.parse(this.responseText);
+                    if(objReturnJSON.erro){
+                        document.getElementById("msg").innerHTML=objReturnJSON.erro;
+                        document.getElementById("formAlterar").style.display="none";
+                    }else{
+                        document.getElementById("msg").innerHTML="";
+                        document.getElementById("idp").value=objReturnJSON.id;
+                        document.getElementById("pergunta").value=objReturnJSON.pergunta;
+                        document.getElementById("opc1").value=objReturnJSON.opc1;
+                        document.getElementById("opc2").value=objReturnJSON.opc2;
+                        document.getElementById("opc3").value=objReturnJSON.opc3;
+                        document.getElementById("resposta").value=objReturnJSON.resposta;
+                        document.getElementById("formAlterar").dataset.idOriginal=objReturnJSON.id;
+                        document.getElementById("formAlterar").style.display="block";
+                    }
+                }catch (e){
+                    document.getElementById("msg").innerHTML="erro ao processar resposta";
+                    document.getElementById("formAlterar").style.display="none";
+                }
+            }else if(this.readyState<4) {
+                console.log("3: " + this.readyState);
+            }else console.log("requisicao falhou: " + this.status);
+        }
+        console.log("4");
+
+        xmlhttp.open("GET", "../../../php/adm/multipla/listarUmaMultipla.php?id=" + id);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send();
+    }
+
+    function enviarAlteracao(){
+        let idOriginal=document.getElementById("formAlterar").dataset.idOriginal;
+        let idp=document.getElementById("idp").value;
+        let pergunta=document.getElementById("pergunta").value;
+        let opc1=document.getElementById("opc1").value;
+        let opc2=document.getElementById("opc2").value;
+        let opc3=document.getElementById("opc3").value;
+        let resposta=document.getElementById("resposta").value;
+
+        console.log("idOriginal: " + idOriginal + " idp: " + idp + " pergunta: " + pergunta + " opc1: " + opc1 + " opc2: " + opc2 + " opc3: " + opc3 + " resposta: " + resposta);
+        let msg=ValidaForm(idp, pergunta);
+        if(msg!==""){
+            document.getElementById("msg").innerHTML=msg;
+            return;
+        }
+
+        let xmlhttp = new XMLHttpRequest();
+        console.log("1");
+        xmlhttp.onreadystatechange=function(){
+            if (this.readyState==4 && this.status==200){
+                console.log("Chegou a resposta OK: " + this.responseText);
+                console.log("2");
+                try {
+                    let resposta=JSON.parse(this.responseText);
+                    if(resposta.sucesso){
+                        document.getElementById("msg").innerHTML = resposta.sucesso;
+                        document.getElementById("formAlterar").style.display="none";
+                        document.getElementById("idBusca").value="";
+                    } else document.getElementById("msg").innerHTML=resposta.erro;
+                }catch (e){ }
+            }else if(this.readyState<4) {
+                console.log("3: " + this.readyState);
+            }else console.log("requisicao falhou: " + this.status);
+        }
+        console.log("4");
+
+        xmlhttp.open("POST", "../../../php/adm/multipla/alterarMultipla.php");
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("id=" + encodeURIComponent(idOriginal) + "&idp=" + encodeURIComponent(idp) + 
+                    "&pergunta=" + encodeURIComponent(pergunta) +
+                    "&opc1=" + encodeURIComponent(opc1) +
+                    "&opc2=" + encodeURIComponent(opc2) +
+                    "&opc3=" + encodeURIComponent(opc3) +
+                    "&resposta=" + encodeURIComponent(resposta));
+
+        console.log("enviei form");
+        console.log("5");
+    }
+
+    function ValidaForm(pId, pPergunta){
+        let msg="";
+        if(pId=="") msg="id nao preenchido<br>";
+        if(pPergunta=="") msg+="pergunta nao preenchida<br>";
+        return msg;
+    }
+    
+    window.onload=function(){
+        const parametros=new URLSearchParams(window.location.search);
+        const id=parametros.get('id');
+        if(id){
+            document.getElementById('idBusca').value=id;
+            buscarPergunta();
+        }
+    };
+    </script>
+</head>
+
+<body>
+    <nav>
+        <ul>
+          <li><a href="../../../php/adm/listarPerguntas.php">inicio</a></li>
+        
+          <li>
+            <a href="#">discursivas ▼</a>
+            <ul>
+              <li><a href="../../../html/adm/texto/AlterarExibirTexto.html">alterar/exibir uma pergunta</a></li>
+              <li><a href="../../../html/adm/texto/criarTexto.html">criar pergunta</a></li>
+            </ul>
+          </li>
+      
+          <li>
+            <a href="#">multipla escolha ▼</a>
+            <ul>
+              <li><a href="../../../html/adm/multipla/AlterarExibirMultipla.html">alterar/exibir uma pergunta</a></li>
+              <li><a href="../../../html/adm/multipla/criarMultipla.html">criar pergunta</a></li>
+            </ul>
+          </li>
+      
+          <li>
+            <a href="#">usuários ▼</a>
+            <ul>
+              <li><a href="../../../php/adm/usuario/listarUsu.php">listar usuários</a></li>
+              <li><a href="../../../php/adm/usuario/listarUmUsu.php">exibir um usuário</a></li>
+              <li><a href="../../../html/adm/usuario/criarUsu.html">criar usuário</a></li>
+            </ul>
+          </li>
+      
+          <li class="sair"><a href="../../../index.php">sair</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Alterar e Exibir Uma Pergunta Multipla</h1>
+        
+        <form>
+            <input type="number" id="idBusca" placeholder="id">
+            <button class="btn" type="button" onclick="buscarPergunta()">buscar</button>
+        </form>
+
+        <form id="formAlterar" style="display:none;">
+            <label>id:
+                <input type="number" id="idp" name="idp">
+            </label>
+            <label>pergunta:
+                <input type="text" id="pergunta" name="pergunta">
+            </label>
+            <label>opcao 1:
+                <input type="text" id="opc1" name="opc1">
+            </label>
+            <label>opcao 2:
+                <input type="text" id="opc2" name="opc2">
+            </label>
+            <label>opcao 3:
+                <input type="text" id="opc3" name="opc3">
+            </label>
+            <label>resposta:
+                <input type="text" id="resposta" name="resposta">
+            </label>
+            <button class="btn" type="button" onclick="enviarAlteracao()">Salvar</button>
+        </form>
+
+       <p id="msg"></p>
+      </main>
+  </body>
+</html>
