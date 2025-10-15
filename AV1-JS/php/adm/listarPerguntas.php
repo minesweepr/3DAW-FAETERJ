@@ -10,7 +10,7 @@
 <body>
     <nav>
         <ul>
-          <li><a href="#">inicio</a></li>
+          <li><a href="../adm/listarPerguntas.php">inicio</a></li>
         
           <li>
             <a href="#">discursivas ▼</a>
@@ -31,8 +31,8 @@
           <li>
             <a href="#">usuários ▼</a>
             <ul>
-              <li><a href="usuario/listarUsu.php">listar usuários</a></li>
-              <li><a href="usuario/listarUmUsu.php">exibir um usuário</a></li>
+              <li><a href="../adm/usuario/listarUsu.php">listar usuários</a></li>
+              <li><a href="../adm/usuario/listarUmUsu.php">exibir um usuário</a></li>
               <li><a href="../../html/adm/usuario/criarUsu.html">criar usuário</a></li>
             </ul>
           </li>

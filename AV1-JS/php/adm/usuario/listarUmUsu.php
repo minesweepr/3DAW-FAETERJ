@@ -11,12 +11,12 @@
 <body>
     <nav>
         <ul>
-          <li><a href="../listarPerguntas.php">inicio</a></li>
+          <li><a href="../../adm/listarPerguntas.php">inicio</a></li>
         
           <li>
             <a href="#">discursivas ▼</a>
             <ul>
-              <li><a href="../texto/listarUmTexto.php">exibir uma pergunta</a></li>
+              <li><a href="../../../html/adm/texto/AlterarExibirTexto.html">alterar/exibir uma pergunta</a></li>
               <li><a href="../../../html/adm/texto/criarTexto.html">criar pergunta</a></li>
             </ul>
           </li>
@@ -24,7 +24,7 @@
           <li>
             <a href="#">multipla escolha ▼</a>
             <ul>
-              <li><a href="../multipla/listarUmaMultipla.php">exibir uma pergunta</a></li>
+              <li><a href="../../../html/adm/multipla/AlterarExibirMultipla.html">alterar/exibir uma pergunta</a></li>
               <li><a href="../../../html/adm/multipla/criarMultipla.html">criar pergunta</a></li>
             </ul>
           </li>
@@ -32,8 +32,8 @@
           <li>
             <a href="#">usuários ▼</a>
             <ul>
-              <li><a href="../usuario/listarUsu.php">listar usuários</a></li>
-              <li><a href="../usuario/listarUmUsu.php">exibir um usuário</a></li>
+              <li><a href="../../adm/usuario/listarUsu.php">listar usuários</a></li>
+              <li><a href="../../adm/usuario/listarUmUsu.php">exibir um usuário</a></li>
               <li><a href="../../../html/adm/usuario/criarUsu.html">criar usuário</a></li>
             </ul>
           </li>
