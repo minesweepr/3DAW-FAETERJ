@@ -9,10 +9,9 @@
   <script src="../../../js/adm/GETxml.js"></script>
   <script>
     function criarTexto(){
-      let idp=document.getElementById("idp").value;
       let pergunta=document.getElementById("pergunta").value;
 
-      let params="idp=" + idp + "&pergunta=" + pergunta;
+      let params="pergunta=" + pergunta;
       enviarXML("../../../php/adm/texto/criarTexto.php", params, "msg");
   }
   </script>
@@ -56,9 +55,6 @@
         <h1>criar pergunta texto</h1>
 
         <form action="" method="GET">
-            <label for="idp">
-                id: <input type="number" name="idp" id="idp">
-            </label>
             <label for="pergunta">
                 pergunta: <input type="text" name="pergunta" id="pergunta">
             </label>

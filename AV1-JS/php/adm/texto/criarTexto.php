@@ -1,17 +1,25 @@
 <?php
 if($_SERVER["REQUEST_METHOD"]=="GET"){
-    $idp=$_GET["idp"];
     $pergunta=$_GET["pergunta"];
 
-    if(!file_exists("../../../perguntasTexto.txt")) {
-        $arq=fopen("../../../perguntasTexto.txt","w") or die("erro na criacao do arq");
-        fclose($arq);
-    }
-    $arq=fopen("../../../perguntasTexto.txt","a") or die("erro abertura");
+    $servidor="localhost";
+    $username="root";
+    $senha="";
+    $database="3daw";
+    $conn =new mysqli($servidor, $username, $senha, $database);
 
-    $linha="$idp;$pergunta\n";
-    fwrite($arq,$linha);
-    fclose($arq);    
-    echo "foi";
+    if($conn->connect_error) die(json_encode("erro de conexão " . $conn->connect_error));
+    //só para ter crtz pq eu tava tendo um erro em relação a isso
+    $conn->set_charset("utf8mb4");
+
+    $stmt=$conn->prepare("INSERT INTO pergunta (tipo, texto) VALUES (?, ?)");
+    $tipo="discursiva";
+    $stmt->bind_param("ss", $tipo, $pergunta);
+
+    if($stmt->execute()) echo("foi");
+    else echo json_encode("erro ".$stmt->error);
+
+    $stmt->close();
+    $conn->close();
 }
 ?>
