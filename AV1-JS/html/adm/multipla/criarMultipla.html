@@ -9,14 +9,13 @@
   <script src="../../../js/adm/GETxml.js"></script>
   <script>
     function criarMultipla(){
-      let idp=document.getElementById("idp").value;
       let pergunta=document.getElementById("pergunta").value;
       let opc1=document.getElementById("opc1").value;
       let opc2=document.getElementById("opc2").value;
       let opc3=document.getElementById("opc3").value;
       let resposta=document.getElementById("resposta").value;
 
-      let params="idp=" + idp + "&pergunta=" + pergunta + "&opc1=" + opc1 +
+      let params="pergunta=" + pergunta + "&opc1=" + opc1 +
                  "&opc2=" + opc2 + "&opc3=" + opc3 + "&resposta=" + resposta;
       enviarXML("../../../php/adm/multipla/criarMultipla.php", params, "msg");
   }
@@ -61,9 +60,6 @@
         <h1>criar pergunta multipla</h1>
         
         <form action="" method="GET">
-            <label for="idp">
-                id: <input type="number" name="idp" id="idp">
-            </label>
             <label for="pergunta">
                 pergunta: <input type="text" name="pergunta" id="pergunta">
             </label>
