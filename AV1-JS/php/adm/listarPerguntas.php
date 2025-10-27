@@ -47,30 +47,32 @@
         <table>
             <tr><th>id</th><th>pergunta</th><th>funcionalidades</th></tr>
             <?php
-            $arqTexto=fopen("../../perguntasTexto.txt", "r") or die ("erro");
-            $index=0;
-            $existe=false;
-            while(($linha=fgets($arqTexto))!==false){
-                if($linha=="")continue;
-                
-                $coluna=explode(";", trim($linha));
-                if(count($coluna)<2)continue;
-                
-                echo "<tr>
-                <td>".$coluna[0]."</td>
-                <td>".$coluna[1]."</td>
-                <td>
-                    <a href='../../html/adm/texto/AlterarExibirTexto.html?id=".$coluna[0]."'>alterar</a> | 
-                    <a href='texto/excluirTexto.php?id=".$index."' onclick=\"return confirm('tem certeza que deseja excluir esta pergunta?')\">excluir</a>
-                </td>
-                </tr>";
+            $servidor="localhost";
+            $username="root";
+            $senha="";
+            $database="3daw";
 
-                $index++;
-                $existe=true;
-            }
-            if(!$existe)echo "nenhuma pergunta cadastrada.";
-            
-            fclose($arqTexto);
+            $conn=new mysqli($servidor, $username, $senha, $database);
+            if($conn->connect_error) die(json_encode("erro de conexão ".$conn->connect_error));
+            //só para ter crtz pq eu tava tendo um erro em relação a isso
+            $conn->set_charset("utf8mb4");
+
+            $sql="SELECT id, texto FROM pergunta WHERE tipo='discursiva' ORDER BY id ASC;";
+            $resultado=$conn->query($sql);
+
+            if($resultado->num_rows>0){
+                while($row=$resultado->fetch_assoc()){
+                    echo "<tr>
+                    <td>".$row['id']."</td>
+                    <td>".$row['texto']."</td>
+                    <td>
+                        <a href='../../html/adm/texto/AlterarExibirTexto.html?id=".$row['id']."'>alterar</a> | 
+                        <a href='excluirPergunta.php?id=".$row['id']."' onclick=\"return confirm('tem certeza que deseja excluir esta pergunta?')\">excluir</a>
+                    </td>
+                    </tr>";
+                }
+            } else echo "<tr><td colspan='3'>nenhuma pergunta cadastrada.</td></tr>";
+            $conn->close();
             ?>
         </table>
 
@@ -78,34 +80,38 @@
         <table>
             <tr><th>id</th><th>pergunta</th><th>opção 1</th><th>opção 2</th><th>opção 3</th><th>resposta</th><th>Funcionalidades</th></tr>
             <?php
-            $arqMulti=fopen("../../perguntasMulti.txt", "r") or die ("erro");
-            $index=0;
-            $existe=false;
-            while(($linha=fgets($arqMulti))!==false){
-                if($linha=="")continue;
-                
-                $coluna=explode(";", trim($linha));
-                if(count($coluna)<6)continue;
-                
-                echo "<tr>
-                <td>".$coluna[0]."</td>
-                <td>".$coluna[1]."</td>
-                <td>".$coluna[2]."</td>
-                <td>".$coluna[3]."</td>
-                <td>".$coluna[4]."</td>
-                <td>".$coluna[5]."</td>
-                <td>
-                    <a href='../../html/adm/multipla/AlterarExibirMultipla.html?id=".$coluna[0]."'>alterar</a> | 
-                    <a href='multipla/excluirMultipla.php?id=".$index."' onclick=\"return confirm('tem certeza que deseja excluir esta pergunta?')\">excluir</a>
-                </td>
-                </tr>";
+            $servidor="localhost";
+            $username="root";
+            $senha="";
+            $database="3daw";
 
-                $index++;
-                $existe=true;
-            }
-            if(!$existe)echo "nenhuma pergunta cadastrada.";
-            
-            fclose($arqMulti);
+            $conn=new mysqli($servidor, $username, $senha, $database);
+            if($conn->connect_error) die(json_encode("erro de conexão ".$conn->connect_error));
+            //só para ter crtz pq eu tava tendo um erro em relação a isso
+            $conn->set_charset("utf8mb4");
+
+            $sql="SELECT pergunta_multipla.id, pergunta.texto, pergunta_multipla.opc_a, pergunta_multipla.opc_b, pergunta_multipla.opc_c, 
+            pergunta_multipla.resposta FROM pergunta_multipla JOIN pergunta ON pergunta_multipla.id = pergunta.id ORDER BY 
+            pergunta_multipla.id ASC;";
+            $resultado=$conn->query($sql);
+
+            if($resultado->num_rows>0){
+                while($row=$resultado->fetch_assoc()){
+                    echo "<tr>
+                    <td>".$row['id']."</td>
+                    <td>".$row['texto']."</td>
+                    <td>".$row['opc_a']."</td>
+                    <td>".$row['opc_b']."</td>
+                    <td>".$row['opc_c']."</td>
+                    <td>".$row['resposta']."</td>
+                    <td>
+                        <a href='../../html/adm/multipla/AlterarExibirMultipla.html?id=".$row['id']."'>alterar</a> | 
+                        <a href='excluirPergunta.php?id=".$row['id']."' onclick=\"return confirm('tem certeza que deseja excluir esta pergunta?')\">excluir</a>
+                    </td>
+                    </tr>";
+                }
+            } else echo "<tr><td colspan='7'>nenhuma pergunta cadastrada.</td></tr>";
+            $conn->close();
             ?>
         </table>
 
@@ -113,24 +119,29 @@
         <table>
             <tr><th>email</th><th>pergunta</th><th>resposta</th></tr>
             <?php
-            $arqResp=fopen("../../respostas.txt", "r") or die ("erro");
-            $existe=false;
-            while(($linha=fgets($arqResp))!==false){
-                if($linha=="")continue;
-                
-                $coluna=explode(";", trim($linha));
-                if(count($coluna)<3)continue;
-                
-                echo "<tr>
-                <td>".$coluna[0]."</td>
-                <td>".$coluna[1]."</td>
-                <td>".$coluna[2]."</td></tr>";
+            $servidor="localhost";
+            $username="root";
+            $senha="";
+            $database="3daw";
 
-                $existe=true;
-            }
-            if(!$existe)echo "nenhuma resposta cadastrada.";
-            
-            fclose($arqResp);
+            $conn=new mysqli($servidor, $username, $senha, $database);
+            if($conn->connect_error) die(json_encode("erro de conexão ".$conn->connect_error));
+            //só para ter crtz pq eu tava tendo um erro em relação a isso
+            $conn->set_charset("utf8mb4");
+
+            $sql="SELECT usuario.email, pergunta.texto AS pergunta, resposta.resposta FROM resposta JOIN usuario ON resposta.id_usuario=usuario.id 
+            JOIN pergunta ON resposta.id_pergunta=pergunta.id ORDER BY resposta.id ASC;";
+            $resultado=$conn->query($sql);
+
+            if($resultado->num_rows>0){
+                while($row=$resultado->fetch_assoc()){
+                    echo "<tr>
+                    <td>".$row['email']."</td>
+                    <td>".$row['pergunta']."</td>
+                    <td>".$row['resposta']."</td></tr>";
+                }
+            } else echo "<tr><td colspan='3'>nenhuma resposta cadastrada.</td></tr>";
+            $conn->close();
             ?>
         </table>
       </main>

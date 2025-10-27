@@ -47,31 +47,35 @@
         <table>
             <tr><th>nome</th><th>email</th><th>senha</th><th>Funcionalidades</th></tr>
             <?php
-            $arq=fopen("../../../usuarios.txt", "r") or die ("erro");
-            $index=0;
-            $existe=false;
-            while(($linha=fgets($arq))!==false){
-                if($linha=="")continue;
-                
-                $coluna=explode(";", trim($linha));
-                if(count($coluna)<3)continue;
-                
-                echo "<tr>
-                <td>".$coluna[0]."</td>
-                <td>".$coluna[1]."</td>
-                <td>".$coluna[2]."</td>
-                <td>
-                    <a href='alterarUsu.php?id=".$index."'>alterar</a> | 
-                    <a href='excluirUsu.php?id=".$index."' onclick=\"return confirm('tem certeza que deseja excluir este usuario?')\">excluir</a>
-                </td>
-                </tr>";
+            $servidor="localhost";
+            $username="root";
+            $senha="";
+            $database="3daw";
 
-                $index++;
-                $existe=true;
-            }
-            if(!$existe)echo "nenhum usuario cadastrado.";
-            fclose($arq);
+            $conn=new mysqli($servidor, $username, $senha, $database);
+            if($conn->connect_error) die(json_encode("erro de conexão ".$conn->connect_error));
+            //só para ter crtz pq eu tava tendo um erro em relação a isso
+            $conn->set_charset("utf8mb4");
+
+            $sql="SELECT id, nome, email, senha FROM usuario ORDER BY id ASC";
+            $resultado=$conn->query($sql);
+
+            if($resultado->num_rows>0){
+                while($row=$resultado->fetch_assoc()){
+                    echo "<tr>
+                    <td>".$row['nome']."</td>
+                    <td>".$row['email']."</td>
+                    <td>".$row['senha']."</td>
+                    <td>
+                        <a href='alterarUsu.php?id=".$row['id']."'>alterar</a> | 
+                        <a href='excluirUsu.php?id=".$row['id']."' onclick=\"return confirm('tem certeza que deseja excluir este usuario?')\">excluir</a>
+                    </td>
+                    </tr>";
+                }
+            } else echo "<tr><td colspan='4'>nenhum usuario cadastrado.</td></tr>";
+            $conn->close();
             ?>
+
         </table>
       </main>
   </body>

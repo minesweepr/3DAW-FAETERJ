@@ -12,13 +12,13 @@ if($conn->connect_error) die(json_encode("erro de conexão ".$conn->connect_erro
 //só para ter crtz pq eu tava tendo um erro em relação a isso
 $conn->set_charset("utf8mb4");
 
-$stmt=$conn->prepare("DELETE FROM usuario WHERE id=?");
+$stmt=$conn->prepare("DELETE FROM pergunta WHERE id=?");
 $stmt->bind_param("i", $id);
 
 if($stmt->execute()){
     $stmt->close();
     $conn->close();
-    header("Location: listarUsu.php");
+    header("Location: listarPerguntas.php");
     exit;
 } else echo json_encode("erro ".$stmt->error);
 ?>

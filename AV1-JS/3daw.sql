@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 27, 2025 at 03:27 PM
+-- Generation Time: Oct 27, 2025 at 04:45 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.4.0
 
@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS `pergunta`;
 CREATE TABLE IF NOT EXISTS `pergunta` (
   `id` int NOT NULL AUTO_INCREMENT,
   `tipo` enum('multipla','discursiva') NOT NULL,
-  `texto` text NOT NULL,
+  `texto` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `resposta` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_usuario` int NOT NULL,
   `id_pergunta` int NOT NULL,
-  `resposta` text NOT NULL,
+  `resposta` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL, 
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`),
   KEY `id_pergunta` (`id_pergunta`)
@@ -142,7 +142,7 @@ INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`) VALUES
 -- Constraints for table `pergunta_multipla`
 --
 ALTER TABLE `pergunta_multipla`
-  ADD CONSTRAINT `pergunta_multipla_ibfk_1` FOREIGN KEY (`id`) REFERENCES `pergunta` (`id`);
+  ADD CONSTRAINT `pergunta_multipla_ibfk_1` FOREIGN KEY (`id`) REFERENCES `pergunta` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `resposta`
