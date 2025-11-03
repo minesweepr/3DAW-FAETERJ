@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Listar Alunos</title>
+  <style>table{text-align:center;}</style> 
+  <script>
+    function listarAlunos(){
+      let xmlhttp=new XMLHttpRequest();
+      console.log("1");
+
+      xmlhttp.onreadystatechange=function(){
+        if(this.readyState==4 && this.status==200){
+          console.log("2: ", this.responseText);
+          try{
+            let dados=JSON.parse(this.responseText);
+            const corpoTabela=document.querySelector("#tabela tbody");
+            corpoTabela.innerHTML="";
+            if(dados.length===0){
+              corpoTabela.innerHTML=`<tr><td colspan="4">nenhum aluno foi cadastrado</td></tr>`;
+              return;
+            }
+            dados.forEach(aluno=>{
+              const linha=document.createElement("tr");
+              linha.innerHTML=`<td>${aluno.matricula}</td><td>${aluno.nome}</td><td>${aluno.email}</td>
+                <td>
+                  <a href="buscarEalterar.html?matricula=${aluno.matricula}">alterar</a> |
+                  <a href="../php/deletar.php?matricula=${aluno.matricula}" onclick="return confirm('tem crtz q vc deseja deletar esse aluno?')">deletar</a>
+                </td>`;
+              corpoTabela.appendChild(linha);
+            });
+          }catch(e){
+            console.log("erro:", e);
+            document.querySelector("#tabela tbody").innerHTML=`<tr><td colspan="4">erro ao listar alunos</td></tr>`;
+          }
+        }else if(this.readyState<4) {
+            console.log("3: "+this.readyState);
+        }else{
+          console.log("Requisicao falhou: " + this.status);
+          document.querySelector("#tabela tbody").innerHTML=`<tr><td colspan="4">erro na requisição</td></tr>`;
+        }
+      };
+
+      console.log("5");
+      xmlhttp.open("GET", "../php/listar.php", true);
+      xmlhttp.send();
+      console.log("5");
+    }
+
+    window.addEventListener("DOMContentLoaded", listarAlunos);
+  </script>
+</head>
+<body>
+  <main>
+    <h1>Listar Alunos</h1>
+    <a href="listar.html">listar</a> | <a href="inclusao.html">incluir</a> | <a href="buscarEalterar.html">buscar</a>
+
+    <table id="tabela">
+      <thead><tr><th>Matricula</th><th>Nome</th><th>Email</th><th>Funções</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </main>
+</body>
+</html>

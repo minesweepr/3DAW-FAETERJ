@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Incluir alunos</title>
+  <style>
+    form{
+        display: flex;
+        gap: 10px;
+        width: fit-content;
+        align-content: center;
+        flex-direction: column;
+    }
+  </style>
+
+  <script>
+    function incluirAluno() {
+      let matricula=document.getElementById("matricula").value;
+      let nome=document.getElementById("nome").value;
+      let email=document.getElementById("email").value;
+      let msg="";
+
+      let xmlhttp = new XMLHttpRequest();
+      console.log("1");
+
+      xmlhttp.onreadystatechange=function(){
+        if(this.readyState==4 && this.status==200){
+            console.log("2: ", this.responseText);
+            try{
+                let objRetorno=JSON.parse(this.responseText);
+                if(objRetorno.sucesso){
+                    document.getElementById("msg").innerHTML="<p>" + objRetorno.sucesso + "</p>";
+                    document.getElementById("matricula").value="";
+                    document.getElementById("nome").value="";
+                    document.getElementById("email").value="";
+                }else if(objRetorno.erro) document.getElementById("msg").innerHTML="<p>" + objRetorno.erro + "</p>";
+            }catch(e){
+                document.getElementById("msg").innerHTML="<p>matricula deve ser unica</p>";
+                console.log("erro:", e);
+            }
+        }else if(this.readyState<4) {
+            console.log("3: "+this.readyState);
+        }else console.log("Requisicao falhou: " + this.status);
+      };
+
+      console.log("5");
+      xmlhttp.open("POST", "../php/inclusao.php");
+      xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xmlhttp.send("matricula=" + matricula + "&nome=" + nome + "&email=" + email);
+      console.log("5");
+      }
+    </script>
+</head>
+
+<body>
+    <main>
+        <h1>Incluir Alunos</h1>
+        <a href="listar.html">listar</a> | <a href="inclusao.html">incluir</a> | <a href="buscarEalterar.html">buscar</a>
+        
+        <form action="../php/inclusao.php" method="POST">
+            <label for="matricula">
+                matricula: <input type="number" name="matricula" id="matricula">
+            </label>
+            <label for="nome">
+                nome: <input type="text" name="nome" id="nome">
+            </label>
+            <label for="email">
+                email: <input type="text" name="email" id="email">
+            </label>
+            <button type="button" onclick="incluirAluno()">incluir</button>
+        </form>
+        <p id="msg"></p>
+      </main>
+  </body>
+</html>

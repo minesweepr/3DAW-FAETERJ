@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Buscar & Alterar Alunos</title>
+  <style>
+    form{
+        display: flex;
+        gap: 10px;
+        width: fit-content;
+        align-content: center;
+        flex-direction: column;
+    }
+    button{margin-bottom: 10px;}
+  </style>
+
+  <script>
+    function enviarRequisicao(url, metodo, params, callback){
+        let xhr=new XMLHttpRequest();
+        if(metodo==="GET" && params) url += "?" + params;
+
+        xhr.onreadystatechange=function(){
+            if(this.readyState==4){
+                try{
+                    let resp=JSON.parse(this.responseText);
+                    callback(resp);
+                }catch(e){
+                    document.getElementById("msg").innerHTML=`<p>erro</p>`
+                    console.log("erro:", e);
+                }
+            }
+        };
+
+        xhr.open(metodo, url, true);
+        if(metodo==="POST") xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xhr.send(metodo==="POST"?params:null);
+    }
+
+    function buscarAluno(matricula){
+        if(!matricula){
+            matricula=document.getElementById("matriculaBusca").value;
+            if(!matricula){ 
+                document.getElementById("msg").innerHTML=`<p>insira a matricula para prosseguir</p>`; 
+                return; 
+            }
+        }
+
+        enviarRequisicao("../php/buscar.php","GET","matricula="+encodeURIComponent(matricula), function(resp){
+            if(resp.erro){
+                document.getElementById("msg").innerHTML="<p>"+resp.erro+"</p>";
+                document.getElementById("formAlterar").style.display="none";
+            } else {
+                document.getElementById("formAlterar").style.display="block";
+                document.getElementById("matricula").value=resp.matricula;
+                document.getElementById("nome").value=resp.nome;
+                document.getElementById("email").value=resp.email;
+                document.getElementById("msg").innerHTML="";
+            }
+        });
+    }
+
+    function alterarAluno(){
+        let matricula=document.getElementById("matricula").value;
+        let nome=document.getElementById("nome").value;
+        let email=document.getElementById("email").value;
+
+        if(!matricula||!nome||!email){ document.getElementById("msg").innerHTML="<p>preencha todos os campos</p>"; return; }
+
+        let params="matricula=" + matricula + "&nome=" + nome + "&email=" + email;
+        enviarRequisicao("../php/alterar.php","POST", params, function(resp){
+            if(resp.sucesso) document.getElementById("msg").innerHTML="<p>"+resp.sucesso+"</p>";
+            else document.getElementById("msg").innerHTML="<p>"+resp.erro+"</p>";
+        });
+    }
+
+    function pegarParametro(nome){
+        let params = new URLSearchParams(window.location.search);
+        return params.get(nome);
+    }
+
+    window.addEventListener("DOMContentLoaded",()=>{
+        let matricula=pegarParametro("matricula");
+        if(matricula) buscarAluno(matricula);
+    });
+  </script>
+</head>
+
+<body>
+    <main>
+        <h1>Buscar Aluno</h1>
+        <a href="listar.html">listar</a> | <a href="inclusao.html">incluir</a> | <a href="buscarEalterar.html">buscar</a>
+        
+        <form id="formBusca" onsubmit="event.preventDefault(); buscarAluno();">
+          <label>matricula: <input type="number" id="matriculaBusca"></label>
+          <button type="submit">buscar</button>
+        </form>
+
+        <form id="formAlterar" style="display:none;" onsubmit="event.preventDefault(); alterarAluno();">
+            <h1>Alterar Aluno</h1>
+            <label for="matricula">
+                matricula: <input type="number" name="matricula" id="matricula" readonly>
+            </label>
+            <label for="nome">
+                nome: <input type="text" name="nome" id="nome">
+            </label>
+            <label for="email">
+                email: <input type="text" name="email" id="email">
+            </label>
+            <button type="submit">alterar</button>
+        </form>
+        <p id="msg"></p>
+      </main>
+  </body>
+</html>
