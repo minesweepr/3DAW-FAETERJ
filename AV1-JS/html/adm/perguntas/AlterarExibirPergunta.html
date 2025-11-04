@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Alterar Pergunta</title>
+  <link rel="stylesheet" href="../../../css/geral.css">
+  <link rel="stylesheet" href="../../../css/tabela.css">
+  <link rel="stylesheet" href="../../../css/form.css">
+  <style>.multipla{display: none;}</style>
+</head>
+
+<body>
+    <nav>
+        <ul>
+          <li><a href="../listarPerguntasRespostas.html">inicio</a></li>
+          <li><a href="criarPergunta.html">criar pergunta</a></li>
+          <li><a href="AlterarExibirPergunta.html">buscar pergunta</a></li>
+          
+          <li>
+            <a href="#">usuários ▼</a>
+            <ul>
+              <li><a href="../usuario/listarUsu.html">listar usuários</a></li>
+              <li><a href="../usuario/AlterarExibirUsu.html">exibir um usuário</a></li>
+              <li><a href="../usuario/criarUsu.html">criar usuário</a></li>
+            </ul>
+          </li>
+        
+          <li class="sair"><a href="../../../index.php">sair</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Alterar e Exibir Pergunta</h1>
+
+        <form>
+            <select id="tipoBusca">
+                <option value="multipla">multipla escolha</option>
+                <option value="discursiva">discursiva</option>
+            </select>
+            <input type="number" id="idBusca" placeholder="id da pergunta">
+            <button type="button" class="btn" onclick="buscarPergunta()">Buscar</button>
+        </form>
+
+        <form id="formAlterar" style="display:none;" class="coluna">
+            <input type="hidden" id="tipo" name="tipo">
+
+            <label>
+                id: <input type="number" id="idp" name="idp" disabled>
+            </label>
+            <label>
+                pergunta: <input type="text" id="pergunta" name="pergunta">
+            </label>
+
+            <div class="multipla">
+                <label>
+                    opcao 1: <input type="text" id="opc1" name="opc1">
+                </label>
+                <label>
+                    opcao 2: <input type="text" id="opc2" name="opc2">
+                </label>
+                <label>
+                    opcao 3: <input type="text" id="opc3" name="opc3">
+                </label>
+                <label>
+                    resposta: <input type="text" id="resposta" name="resposta">
+                </label>
+            </div>
+
+            <button type="button" class="btn" onclick="enviarAlteracao()">alterar</button>
+        </form>
+
+        <p id="msg"></p>
+    </main>
+
+    <script>
+        function enviarRequisicao(url, metodo, params, callback){
+            const xmlhttp=new XMLHttpRequest();
+            if(metodo==="GET" && params) url += "?" + params;
+
+            xmlhttp.onreadystatechange=function(){
+                if(this.readyState===4 && this.status===200){
+                    try{
+                        const resp=JSON.parse(this.responseText);
+                        callback(resp);
+                    }catch(e){
+                        document.getElementById("msg").innerText="erro";
+                        console.error(e);
+                    }
+                }
+            };
+            xmlhttp.open(metodo, url, true);
+            if(metodo==="POST") xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            xmlhttp.send(metodo==="POST"?params:null);
+        }
+
+        function buscarPergunta(){
+            const id=document.getElementById("idBusca").value;
+            const tipo=document.getElementById("tipoBusca").value;
+
+            enviarRequisicao("../../../php/adm/perguntas/buscarPergunta.php", "GET", "id=" + id + "&tipo=" + tipo, function(resp){
+                if(resp.erro){
+                    document.getElementById("msg").innerText=resp.erro;
+                    document.getElementById("formAlterar").style.display="none";
+                    return;
+                }
+                document.getElementById("formAlterar").style.display="block";
+                document.getElementById("idp").value=resp.id;
+                document.getElementById("pergunta").value=resp.texto;
+                document.getElementById("tipo").value=tipo;
+                if(tipo==="multipla"){
+                    document.querySelector(".multipla").style.display="block";
+                    document.getElementById("opc1").value=resp.opc_a||"";
+                    document.getElementById("opc2").value=resp.opc_b||"";
+                    document.getElementById("opc3").value=resp.opc_c||"";
+                    document.getElementById("resposta").value=resp.resposta||"";
+                } else document.querySelector(".multipla").style.display="none";
+                document.getElementById("msg").innerText="";
+            });
+        }
+
+        function enviarAlteracao(){
+            const tipo=document.getElementById("tipo").value;
+            const idp=document.getElementById("idp").value;
+            const pergunta=document.getElementById("pergunta").value;
+
+            let params="idp=" + idp + "&tipo=" + tipo + "&pergunta=" + pergunta;
+
+            if(tipo==="multipla"){
+                params+="&opc1=" + document.getElementById("opc1").value + "&opc2=" + document.getElementById("opc2").value +
+                          "&opc3=" + document.getElementById("opc3").value + "&resposta=" + document.getElementById("resposta").value;
+            }
+
+            enviarRequisicao("../../../php/adm/perguntas/alterarPergunta.php", "POST", params, function(resp){
+                if(resp.sucesso) document.getElementById("msg").innerText=resp.sucesso;
+                else document.getElementById("msg").innerText=resp.erro;
+            });
+        }
+
+        window.addEventListener("DOMContentLoaded",()=>{
+            const p=new URLSearchParams(window.location.search);
+            const id=p.get("id");
+            const tipo=p.get("tipo");
+            if(id && tipo){
+                document.getElementById("idBusca").value=id;
+                document.getElementById("tipoBusca").value=tipo;
+                buscarPergunta();
+            }
+        });
+    </script>
+  </body>
+</html>

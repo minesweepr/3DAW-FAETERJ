@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>sistema corporativo</title>
+  <link rel="stylesheet" href="../../css/geral.css"> 
+  <link rel="stylesheet" href="../../css/tabela.css">
+
+  <script>
+    function listarDados(){
+        fetch("../../php/adm/perguntas/listarPerguntasRespostas.php")
+        .then(res=>res.json())
+        .then(dados=>{
+            const discTable = document.querySelector("#discursivas tbody");
+            discTable.innerHTML="";
+            if(!dados.discursivas || dados.discursivas.length===0) discTable.innerHTML = `<tr><td colspan="3">nenhuma pergunta encontrada</td></tr>`;
+            else{
+                dados.discursivas.forEach(p=>{
+                    const linha = document.createElement("tr");
+                    linha.innerHTML = `
+                        <td>${p.id}</td><td>${p.texto}</td>
+                        <td>
+                            <a href="perguntas/AlterarExibirPergunta.html?id=${p.id}&tipo=discursiva">alterar</a> |
+                            <a href="#" onclick="deletar(${p.id})">deletar</a>
+                        </td>`;
+                    discTable.appendChild(linha);
+                });
+            }
+          
+            const multiTable=document.querySelector("#multipla tbody");
+            multiTable.innerHTML="";
+            if(!dados.multipla||dados.multipla.length===0){
+                multiTable.innerHTML=`<tr><td colspan="7">nenhuma pergunta encontrada</td></tr>`;
+            }else{
+                dados.multipla.forEach(p=>{
+                    const linha=document.createElement("tr");
+                    linha.innerHTML=`
+                        <td>${p.id}</td><td>${p.texto}</td><td>${p.opc_a}</td><td>${p.opc_b}</td><td>${p.opc_c}</td><td>${p.resposta}</td>
+                        <td>
+                            <a href="perguntas/AlterarExibirPergunta.html?id=${p.id}&tipo=multipla">alterar</a> |
+                            <a href="#" onclick="deletar(${p.id})">deletar</a>
+                        </td>`;
+                    multiTable.appendChild(linha);
+                });
+            }
+          
+            const respTable=document.querySelector("#respostas tbody");
+            respTable.innerHTML="";
+            if(!dados.respostas||dados.respostas.length===0) respTable.innerHTML=`<tr><td colspan="3">nenhuma resposta encontrada</td></tr>`;
+            else{
+                dados.respostas.forEach(r=>{
+                    const linha=document.createElement("tr");
+                    linha.innerHTML=`<td>${r.email}</td><td>${r.pergunta}</td><td>${r.resposta}</td>`;
+                    respTable.appendChild(linha);
+                });
+            }
+        }).catch(err => console.log("erro:", err));
+    }
+
+    function deletar(id){
+        if(!confirm("tem crtz q vc deseja deletar essa pergunta?")) return;
+    
+        fetch(`../../php/adm/perguntas/excluirPergunta.php?id=${id}`)
+        .then(res=>res.text())
+        .then(resp=>{
+            console.log(resp);
+            listarDados();
+        }).catch(err => console.log("erro:", err));
+    }
+
+    window.addEventListener("DOMContentLoaded", listarDados);
+  </script>
+</head>
+
+<body>
+    <nav>
+        <ul>
+          <li><a href="listarPerguntasRespostas.html">inicio</a></li>
+          <li><a href="perguntas/criarPergunta.html">criar pergunta</a></li>
+          <li><a href="perguntas/AlterarExibirPergunta.html">buscar pergunta</a></li>
+      
+          <li>
+            <a href="#">usuários ▼</a>
+            <ul>
+              <li><a href="usuario/listarUsu.html">listar usuários</a></li>
+              <li><a href="usuario/AlterarExibirUsu.html">exibir um usuário</a></li>
+              <li><a href="usuario/criarUsu.html">criar usuário</a></li>
+            </ul>
+          </li>
+      
+          <li class="sair"><a href="../../index.php">sair</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>lista de perguntas</h1>
+        <h2>perguntas discursivas</h2>
+        <table id="discursivas">
+          <thead>
+            <tr><th>id</th><th>pergunta</th><th>funcionalidades</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <h2>perguntas de múltipla escolha</h2>
+        <table id="multipla">
+          <thead>
+            <tr><th>id</th><th>pergunta</th><th>opção 1</th><th>opção 2</th><th>opção 3</th><th>resposta</th><th>Funcionalidades</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        
+        <h1>respostas</h1>
+        <table id="respostas">
+          <thead>
+            <tr><th>email</th><th>pergunta</th><th>resposta</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </main>
+  </body>
+</html>

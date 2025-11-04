@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>sistema corporativo</title>
+  <link rel="stylesheet" href="../../../css/geral.css"> 
+  <link rel="stylesheet" href="../../../css/tabela.css"> 
+  <link rel="stylesheet" href="../../../css/form.css"> 
+
+    <script>
+    function listarUsu(){
+      let xmlhttp=new XMLHttpRequest();
+      console.log("1");
+
+      xmlhttp.onreadystatechange=function(){
+        if(this.readyState==4 && this.status==200){
+          console.log("2: ", this.responseText);
+          try{
+            let dados=JSON.parse(this.responseText);
+            const corpoTabela=document.querySelector("#tabela tbody");
+            corpoTabela.innerHTML="";
+            if(dados.length===0){
+              corpoTabela.innerHTML=`<tr><td colspan="4">nenhum usuario foi cadastrado</td></tr>`;
+              return;
+            }
+            dados.forEach(usuario=>{
+              const linha=document.createElement("tr");
+              linha.innerHTML=`<td>${usuario.nome}</td><td>${usuario.email}</td><td>${usuario.senha}</td>
+                <td>
+                  <a href="AlterarExibirUsu.html?email=${usuario.email}">alterar</a> |
+                  <a href="../../../php/adm/usuario/excluirUsu.php?email=${usuario.email}" onclick="return confirm('tem crtz q vc deseja deletar esse usuario?')">deletar</a>
+                </td>`;
+              corpoTabela.appendChild(linha);
+            });
+          }catch(e){
+            console.log("erro:", e);
+            document.querySelector("#tabela tbody").innerHTML=`<tr><td colspan="4">erro ao listar usuarios</td></tr>`;
+          }
+        }else if(this.readyState<4) {
+            console.log("3: "+this.readyState);
+        }else{
+          console.log("Requisicao falhou: " + this.status);
+          document.querySelector("#tabela tbody").innerHTML=`<tr><td colspan="4">erro na requisição</td></tr>`;
+        }
+      };
+
+      console.log("5");
+      xmlhttp.open("GET", "../../../php/adm/usuario/listarUsu.php", true);
+      xmlhttp.send();
+      console.log("5");
+    }
+
+    window.addEventListener("DOMContentLoaded", listarUsu);
+  </script>
+</head>
+
+<body>
+    <nav>
+        <ul>
+          <li><a href="../listarPerguntasRespostas.html">inicio</a></li>
+          <li><a href="../perguntas/criarPergunta.html">criar pergunta</a></li>
+          <li><a href="../perguntas/AlterarExibirPergunta.html">buscar pergunta</a></li>
+          
+          <li>
+            <a href="#">usuários ▼</a>
+            <ul>
+              <li><a href="listarUsu.html">listar usuários</a></li>
+              <li><a href="AlterarExibirUsu.html">exibir um usuário</a></li>
+              <li><a href="criarUsu.html">criar usuário</a></li>
+            </ul>
+          </li>
+        
+          <li class="sair"><a href="../../../index.php">sair</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>listar um usuario</h1>
+
+        <table id="tabela">
+          <thead><tr><th>nome</th><th>email</th><th>senha</th><th>Funções</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </main>
+  </body>
+</html>

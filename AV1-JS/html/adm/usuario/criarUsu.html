@@ -6,57 +6,68 @@
   <link rel="stylesheet" href="../../../css/geral.css"> 
   <link rel="stylesheet" href="../../../css/form.css"> 
 
-  <script src="../../../js/adm/POSTxml.js"></script>
   <script>
-    function criarUsu(){
+    function incluirUsu(){
       let nome=document.getElementById("nome").value;
       let email=document.getElementById("email").value;
       let senha=document.getElementById("senha").value;
+      let msg="";
 
-      let params = "nome=" + nome + "&email=" + email + "&senha=" + senha;
+      let xmlhttp = new XMLHttpRequest();
+      console.log("1");
 
-      enviarXML("../../../php/adm/usuario/criarUsu.php", params, "msg");
-  }
-  </script>
+      xmlhttp.onreadystatechange=function(){
+        if(this.readyState==4 && this.status==200){
+            console.log("2: ", this.responseText);
+            try{
+                let objRetorno=JSON.parse(this.responseText);
+                if(objRetorno.sucesso){
+                    document.getElementById("msg").innerHTML="<p>" + objRetorno.sucesso + "</p>";
+                    document.getElementById("nome").value="";
+                    document.getElementById("email").value="";
+                    document.getElementById("senha").value="";
+                }else if(objRetorno.erro) document.getElementById("msg").innerHTML="<p>" + objRetorno.erro + "</p>";
+            }catch(e){
+                document.getElementById("msg").innerHTML="<p>email deve ser unico</p>";
+                console.log("erro:", e);
+            }
+        }else if(this.readyState<4) {
+            console.log("3: "+this.readyState);
+        }else console.log("Requisicao falhou: " + this.status);
+      };
+
+      console.log("5");
+      xmlhttp.open("POST", "../../../php/adm/usuario/criarUsu.php");
+      xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xmlhttp.send("nome=" + nome + "&email=" + email + "&senha=" + senha);
+      console.log("5");
+      }
+    </script>
 </head>
 
 <body>
     <nav>
         <ul>
-          <li><a href="../../../php/adm/listarPerguntas.php">inicio</a></li>
-        
-          <li>
-            <a href="#">discursivas ▼</a>
-            <ul>
-              <li><a href="../../../html/adm/texto/AlterarExibirTexto.html">alterar/exibir uma pergunta</a></li>
-              <li><a href="../../../html/adm/texto/criarTexto.html">criar pergunta</a></li>
-            </ul>
-          </li>
-      
-          <li>
-            <a href="#">multipla escolha ▼</a>
-            <ul>
-              <li><a href="../../../html/adm/multipla/AlterarExibirMultipla.html">alterar/exibir uma pergunta</a></li>
-              <li><a href="../../../html/adm/multipla/criarMultipla.html">criar pergunta</a></li>
-            </ul>
-          </li>
-      
+          <li><a href="../listarPerguntasRespostas.html">inicio</a></li>
+          <li><a href="../perguntas/criarPergunta.html">criar pergunta</a></li>
+          <li><a href="../perguntas/AlterarExibirPergunta.html">buscar pergunta</a></li>
+          
           <li>
             <a href="#">usuários ▼</a>
             <ul>
-              <li><a href="../../../php/adm/usuario/listarUsu.php">listar usuários</a></li>
-              <li><a href="../../../php/adm/usuario/listarUmUsu.php">exibir um usuário</a></li>
-              <li><a href="../../../html/adm/usuario/criarUsu.html">criar usuário</a></li>
+              <li><a href="listarUsu.html">listar usuários</a></li>
+              <li><a href="AlterarExibirUsu.html">exibir um usuário</a></li>
+              <li><a href="criarUsu.html">criar usuário</a></li>
             </ul>
           </li>
-      
+        
           <li class="sair"><a href="../../../index.php">sair</a></li>
         </ul>
     </nav>
 
     <main>
         <h1>criar usuario</h1>
-        <form action="criarUsu.php" method="POST">
+        <form action="../../../php/adm/usuario/criarUsu.php" method="POST">
             <label for="nome">
                 nome: <input type="text" name="nome" id="nome">
             </label>
@@ -67,7 +78,7 @@
                 senha: <input type="text" name="senha" id="senha">
             </label>
 
-            <button type="button" class="btn" onclick="criarUsu()">enviar</button>
+            <button type="button" class="btn" onclick="incluirUsu()">incluir</button>
         </form>
         <p id="msg"></p>
       </main>

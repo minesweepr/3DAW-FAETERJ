@@ -1,6 +1,6 @@
 <?php
-if(!isset($_GET['id']))die;
-$id=$_GET['id'];
+if(!isset($_GET['email']))die;
+$email=$_GET['email'];
 
 $servidor="localhost";
 $username="root";
@@ -12,13 +12,13 @@ if($conn->connect_error) die(json_encode("erro de conexão ".$conn->connect_erro
 //só para ter crtz pq eu tava tendo um erro em relação a isso
 $conn->set_charset("utf8mb4");
 
-$stmt=$conn->prepare("DELETE FROM usuario WHERE id=?");
-$stmt->bind_param("i", $id);
+$stmt=$conn->prepare("DELETE FROM usuario WHERE email=?");
+$stmt->bind_param("s", $email);
 
 if($stmt->execute()){
     $stmt->close();
     $conn->close();
-    header("Location: listarUsu.php");
+    header("Location: ../../../html/adm/usuario/listarUsu.html");
     exit;
 } else echo json_encode("erro ".$stmt->error);
 ?>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>sistema corporativo</title>
+  <link rel="stylesheet" href="../../../css/geral.css"> 
+  <link rel="stylesheet" href="../../../css/tabela.css"> 
+  <link rel="stylesheet" href="../../../css/form.css"> 
+
+  <script>
+    let emailOriginal=null;
+    function enviarRequisicao(url, metodo, params, callback){
+        let xhr=new XMLHttpRequest();
+        if(metodo==="GET" && params) url += "?" + params;
+
+        xhr.onreadystatechange=function(){
+            if(this.readyState==4){
+                try{
+                    let resp=JSON.parse(this.responseText);
+                    callback(resp);
+                }catch(e){
+                    document.getElementById("msg").innerHTML=`<p>erro</p>`
+                    console.log("erro:", e);
+                }
+            }
+        };
+
+        xhr.open(metodo, url, true);
+        if(metodo==="POST") xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xhr.send(metodo==="POST"?params:null);
+    }
+    
+    function buscarUsu(email){
+        if(!email){
+            email=document.getElementById("formBusca").value;
+            if(!email){ 
+                document.getElementById("msg").innerHTML=`<p>insira a email para prosseguir</p>`; 
+                return; 
+            }
+        }
+
+        enviarRequisicao("../../../php/adm/usuario/buscarUsu.php","GET","email="+encodeURIComponent(email), function(resp){
+            if(resp.erro){
+                document.getElementById("msg").innerHTML="<p>"+resp.erro+"</p>";
+                document.getElementById("formAlterar").style.display="none";
+            }else{
+                document.getElementById("formAlterar").style.display="block";
+                document.getElementById("email").value=resp.email;
+                document.getElementById("nome").value=resp.nome;
+                document.getElementById("senha").value=resp.senha;
+                document.getElementById("msg").innerHTML="";
+                if(!emailOriginal) emailOriginal=resp.email;
+            }
+        });
+    }
+
+    function alterarUsu(){
+        let nome=document.getElementById("nome").value;
+        let email=document.getElementById("email").value;
+        let senha=document.getElementById("senha").value;
+
+        if(!nome||!email||!senha){ document.getElementById("msg").innerHTML="<p>preencha todos os campos</p>"; return; }
+
+        let params = "nome=" + nome + "&email=" + email + "&senha=" + senha + "&emailOriginal=" + encodeURIComponent(emailOriginal);
+        enviarRequisicao("../../../php/adm/usuario/alterarUsu.php","POST", params, function(resp){
+            if(resp.sucesso) document.getElementById("msg").innerHTML="<p>"+resp.sucesso+"</p>";
+            else document.getElementById("msg").innerHTML="<p>"+resp.erro+"</p>";
+        });
+    }
+
+    function pegarParametro(nome){
+        let params=new URLSearchParams(window.location.search);
+        return params.get(nome);
+    }
+
+    window.addEventListener("DOMContentLoaded",()=>{
+        let email=pegarParametro("email");
+        if(email){
+            emailOriginal=email;
+            buscarUsu(email);
+        }
+    });
+  </script>
+</head>
+
+<body>
+    <nav>
+        <ul>
+          <li><a href="../listarPerguntasRespostas.html">inicio</a></li>
+          <li><a href="../perguntas/criarPergunta.html">criar pergunta</a></li>
+          <li><a href="../perguntas/AlterarExibirPergunta.html">buscar pergunta</a></li>
+          
+          <li>
+            <a href="#">usuários ▼</a>
+            <ul>
+              <li><a href="listarUsu.html">listar usuários</a></li>
+              <li><a href="AlterarExibirUsu.html">exibir um usuário</a></li>
+              <li><a href="criarUsu.html">criar usuário</a></li>
+            </ul>
+          </li>
+        
+          <li class="sair"><a href="../../../index.php">sair</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>listar um usuario</h1>
+        <form onsubmit="event.preventDefault(); buscarUsu();">
+            <input type="text" name="busca" id="formBusca" placeholder="email">
+            <button class="btn" type="submit" value="Submit">buscar</button>
+        </form>
+
+        <form id="formAlterar" style="display:none;" onsubmit="event.preventDefault(); alterarUsu();">
+            <label for="nome">
+                nome: <input type="text" name="nome" id="nome">
+            </label>
+            <label for="email">
+                email: <input type="text" name="email" id="email">
+            </label>
+            <label for="senha">
+                senha: <input type="text" name="senha" id="senha">
+            </label>
+
+            <button type="submit" class="btn">alterar</button>
+        </form>
+        <p id="msg"></p>
+      </main>
+  </body>
+</html>

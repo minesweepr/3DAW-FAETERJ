@@ -1,44 +1,60 @@
 <?php
-session_start(); 
-if($_SERVER['REQUEST_METHOD']=='POST'){
-    $nome=$_POST['nome'];
-    $email=$_SESSION['email']=$_POST['email'];//https://www.reddit.com/r/PHPhelp/comments/mp75pq/how_do_you_store_a_php_variable_in_between_page/
-    $senha=$_POST['senha'];
+session_start();
+$servidor="localhost";
+$username="root";
+$senha="";
+$database="3daw";
+$conn=new mysqli($servidor, $username, $senha, $database);
 
-    if ($email==='adm@adm.com' || $nome==='adm'){
-        header("Location: php/adm/listarPerguntas.php");
+if($conn->connect_error) die(json_encode("erro de conexão ".$conn->connect_error));
+$conn->set_charset("utf8mb4");
+
+$erro="";
+
+if($_SERVER['REQUEST_METHOD']==='POST'){
+    $nome=trim($_POST['nome']);
+    $email=trim($_POST['email']);
+    $senha=trim($_POST['senha']);
+
+    $stmt=$conn->prepare("SELECT nome, email, senha FROM usuario WHERE id=-1");
+    $stmt->execute();
+    $result=$stmt->get_result();
+    $admin=$result->fetch_assoc();
+    $stmt->close();
+    if($admin && $nome===$admin['nome'] && $email===$admin['email'] && $senha===$admin['senha']) {
+        $_SESSION['nome']=$nome;
+        $_SESSION['email']=$email;
+        header("Location: html/adm/listarPerguntasRespostas.html");
         exit;
     }
+    $stmt=$conn->prepare("SELECT id, nome, email, senha FROM usuario WHERE email=?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result=$stmt->get_result();
+    $usuarioExistente=$result->fetch_assoc();
+    $stmt->close();
 
-    if(!file_exists("usuarios.txt")){
-        $arq=fopen("usuarios.txt", "w") or die ("erro");
-        fclose($arq);
+    if($usuarioExistente){
+        if($usuarioExistente['senha']===$senha) {
+            $_SESSION['nome']=$usuarioExistente['nome'];
+            $_SESSION['email']=$usuarioExistente['email'];
+            header("Location: php/questionario/questionario.php");
+            exit;
+        }else $erro="senha incorreta";
+    }else{
+        $stmtInsert=$conn->prepare("INSERT INTO usuario (nome, email, senha) VALUES (?, ?, ?)");
+        $stmtInsert->bind_param("sss", $nome, $email, $senha);
+        $stmtInsert->execute();
+        $stmtInsert->close();
+
+        $_SESSION['nome']=$nome;
+        $_SESSION['email']=$email;
+        header("Location: php/questionario/questionario.php");
+        exit;
     }
-
-    $duplicado=false;
-    $arq=fopen("usuarios.txt", "r") or die ("erro");
-    while(($linha=fgets($arq))!==false){
-        $coluna=explode(";", trim($linha));
-        if(count($coluna)>2){
-            if(strcmp($coluna[1],$email)==0){
-                $duplicado=true;
-                break;
-            }
-        }
-    }
-    fclose($arq);
-
-    if(!$duplicado){
-        $arq=fopen("usuarios.txt", "a") or die ("erro");
-        $linha="$nome;$email;$senha\n";
-        fwrite($arq, $linha);
-        fclose($arq);
-    }
-    header("Location: php/questionario/questionario.php");
-
 }
+$conn->close();
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,21 +67,15 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
 <body>
     <main>
-        <h1>login/cadastro do usuário</h1>
+        <h1>Login/Cadastro do usuário</h1>
+        <form action="index.php" method="POST" class="coluna">
+            <label for="nome">nome: <input type="text" name="nome" id="nome" required></label>
+            <label for="email">email: <input type="email" name="email" id="email" required></label>
+            <label for="senha">senha: <input type="password" name="senha" id="senha" required></label>
 
-        <form action="index.php" method="POST">
-            <label for="nome">
-                nome: <input type="text" name="nome" id="nome">
-            </label>
-            <label for="email">
-                email: <input type="text" name="email" id="email">
-            </label>
-            <label for="senha">
-                senha: <input type="password" name="senha" id="senha">
-            </label>
-
-            <button class="btn" type="submit" value="Submit">logar</button>
+            <button class="btn" type="submit">logar</button>
+            <?php if(!empty($erro)):?><p style="text-align:center;"><?= htmlspecialchars($erro) ?></p><?php endif; ?>
         </form>
-      </main>
-  </body>
+    </main>
+</body>
 </html>
